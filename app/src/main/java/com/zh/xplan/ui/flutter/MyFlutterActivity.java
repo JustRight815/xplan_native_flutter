@@ -5,17 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 import com.zh.xplan.R;
-import com.zh.xplan.ui.base.BaseActivity;
-import io.flutter.Log;
 import io.flutter.facade.Flutter;
 import io.flutter.view.FlutterView;
 
 public class MyFlutterActivity extends AppCompatActivity {
+    private FlutterView flutterView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flutter);
-        final FlutterView flutterView = Flutter.createView(
+        flutterView = Flutter.createView(
                 this,
                 getLifecycle(),
                 "route1"
@@ -30,6 +30,15 @@ public class MyFlutterActivity extends AppCompatActivity {
             }
         };
         flutterView.addFirstFrameListener(listeners[0]);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(this.flutterView!=null){
+            this.flutterView.popRoute();
+        }else {
+            super.onBackPressed();
+        }
     }
 
 }

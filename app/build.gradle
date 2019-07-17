@@ -90,6 +90,8 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1315_43612.jar')
     implementation project(':lib_base')
     implementation project(':lib_swipeback')
+    implementation project(':flutter')
+
     implementation 'com.android.support:multidex:1.0.3'
     //HTML解析
     implementation 'org.jsoup:jsoup:1.11.3'
@@ -113,7 +115,7 @@ dependencies {
     // kotlin使用
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41"
 
-    implementation project(':flutter')
+
 }
 
 andResGuard {
