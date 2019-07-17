@@ -254,6 +254,13 @@
             android:theme="@style/AppTheme.Transparent"
             />
 
+        <activity
+            android:name="com.zh.xplan.ui.flutter.MyFlutterActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme.Transparent"
+            />
+
         <!-- 分享和登录-->
         <activity
             android:name="com.mob.tools.MobUIShell"

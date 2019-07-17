@@ -48,6 +48,7 @@ import com.zh.xplan.ui.aboutapp.AboutAppActivity;
 import com.zh.xplan.ui.base.BaseFragment;
 import com.zh.xplan.ui.camera.RecordVideoSet;
 import com.zh.xplan.ui.camera.record.CustomCameraActivity;
+import com.zh.xplan.ui.flutter.MyFlutterActivity;
 import com.zh.xplan.ui.iptoolsactivity.IpToolsActivity;
 import com.zh.xplan.ui.logisticsdetail.LogisticsDetailActivity;
 import com.zh.xplan.ui.robot.RobotKotlinActivity;
@@ -291,7 +292,8 @@ public class SettingFragment extends BaseFragment implements OnClickListener,Set
 				break;
 			case R.id.ll_kotlin:
 				//kotlin测试
-				startActivity(new Intent(getActivity(), KotlinDemoActivity.class));
+//				startActivity(new Intent(getActivity(), KotlinDemoActivity.class));
+				startActivity(new Intent(getActivity(), MyFlutterActivity.class));
 				break;
 			case R.id.ll_logistics:
 				//kotlin测试

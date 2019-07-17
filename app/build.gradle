@@ -19,7 +19,7 @@ android {
         // 指定要ndk需要兼容的架构(这样其他依赖包里mips,x86,armeabi,arm-v8之类的so会被过滤掉)
         //不指定的话zbar总是找不到so
         ndk {
-            abiFilters  "armeabi"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+            abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
 
         multiDexEnabled true  //transformDexArchiveWithExternalLibsDexMergerForDebug unable to merge dex 问题
@@ -38,6 +38,9 @@ android {
             minifyEnabled false
             shrinkResources false //前提是minifyEnabled为true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+            }
         }
 
         release {
@@ -45,6 +48,9 @@ android {
             minifyEnabled true
             shrinkResources false //前提是minifyEnabled为true  设置为true 有风险
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+            }
         }
     }
 
@@ -59,7 +65,11 @@ android {
     dexOptions {
         jumboMode = true
     }
-
+    //使用JAVA8解析  invokedynamic requires --min-sdk-version >= 26
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 //transformDexArchiveWithExternalLibsDexMergerForDebug' — Unable to merge dex
@@ -102,6 +112,8 @@ dependencies {
     implementation "me.leolin:ShortcutBadger:1.1.21@aar"
     // kotlin使用
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41"
+
+    implementation project(':flutter')
 }
 
 andResGuard {

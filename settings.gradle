@@ -1,3 +1,8 @@
 include ':app', ':lib_swipeback'
 include ':lib_base'
 include ':lib_skin'
+setBinding(new Binding([gradle: this]))
+evaluate(new File(
+        settingsDir,  //若做为原应用的子mudule，则为settingsDir  同级目录则为：  settingsDir.parentFile
+        "/flutter_module/.android/include_flutter.groovy"
+))
