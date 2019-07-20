@@ -8,23 +8,19 @@ import android.os.Build;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-
 import androidx.multidex.MultiDex;
-
 import com.bumptech.glide.Glide;
 import com.module.common.BaseLib;
 import com.module.common.log.LogUtil;
 import com.module.common.utils.CrashUtils;
 import com.squareup.leakcanary.LeakCanary;
-//import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 import com.zh.swipeback.SlideFinishManager;
 import com.zh.xplan.ui.menupicture.utils.ScreenUtil;
 import com.zh.xplan.ui.skin.Settings;
 import com.zh.xplan.ui.skin.SkinChangeHelper;
-
 import org.litepal.LitePal;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -56,7 +52,7 @@ public class XPlanApplication extends Application {
         if(isMainProcess()){
 //            initLeakCanary();
             CrashUtils.init();
-//            CrashReport.initCrashReport(getApplicationContext(), "0785b70a94", AppConstants.isDebug);
+            CrashReport.initCrashReport(getApplicationContext(), "0785b70a94", AppConstants.isDebug);
             BaseLib.init(this, AppConstants.isDebug)
                     .setBaseUrl(AppConstants.HTTP_HOST)
                     .initImageManager(this);
