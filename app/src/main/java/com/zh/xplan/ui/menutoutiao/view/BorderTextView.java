@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -18,7 +18,7 @@ import com.zh.xplan.R;
  * 边框默认与文字颜色一致
  * Created by chuxin on 2015/9/11.
  */
-public class BorderTextView extends android.support.v7.widget.AppCompatTextView {
+public class BorderTextView extends androidx.appcompat.widget.AppCompatTextView {
 
     public static final float DEFAULT_STROKE_WIDTH = 1.0f;    // 默认边框宽度, 1dp
     public static final float DEFAULT_CORNER_RADIUS = 2.0f;   // 默认圆角半径, 2dp

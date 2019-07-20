@@ -1,6 +1,6 @@
 package com.zh.xplan.ui.menusetting;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 import com.zh.xplan.ui.base.BaseView;
 import com.zh.xplan.ui.weather.model.WeatherBeseModel;

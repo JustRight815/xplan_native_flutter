@@ -23,17 +23,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.annotation.AnimRes;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntDef;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.SwipeDismissBehavior;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.WindowInsetsCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -50,6 +39,18 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.AnimRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.behavior.SwipeDismissBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.module.common.R;
 
 import java.lang.annotation.Retention;
@@ -545,7 +546,7 @@ public final class SweetSnackbar {
         if(animateIn != -1){
             anim = AnimationUtils.loadAnimation(mView.getContext(),animateIn);
         }else {
-            anim = AnimationUtils.loadAnimation(mView.getContext(), android.support.design.R.anim.design_snackbar_in);
+            anim = AnimationUtils.loadAnimation(mView.getContext(), R.anim.design_snackbar_in);
         }
         anim.setInterpolator(AnimationUtil.FAST_OUT_SLOW_IN_INTERPOLATOR);
         anim.setDuration(ANIMATION_DURATION);
@@ -569,7 +570,7 @@ public final class SweetSnackbar {
         if(animateOut != -1){
             anim = AnimationUtils.loadAnimation(mView.getContext(),animateOut);
         }else {
-            anim = AnimationUtils.loadAnimation(mView.getContext(), android.support.design.R.anim.design_snackbar_out);
+            anim = AnimationUtils.loadAnimation(mView.getContext(), R.anim.design_snackbar_out);
         }
         anim.setInterpolator(AnimationUtil.FAST_OUT_SLOW_IN_INTERPOLATOR);
         anim.setDuration(ANIMATION_DURATION);
@@ -661,13 +662,13 @@ public final class SweetSnackbar {
 
         public SnackbarLayout(Context context, AttributeSet attrs) {
             super(context, attrs);
-            TypedArray a = context.obtainStyledAttributes(attrs, android.support.design.R.styleable.SnackbarLayout);
-            mMaxWidth = a.getDimensionPixelSize(android.support.design.R.styleable.SnackbarLayout_android_maxWidth, -1);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SnackbarLayout);
+            mMaxWidth = a.getDimensionPixelSize(R.styleable.SnackbarLayout_android_maxWidth, -1);
             mMaxInlineActionWidth = a.getDimensionPixelSize(
-                    android.support.design.R.styleable.SnackbarLayout_maxActionInlineWidth, -1);
-            if (a.hasValue(android.support.design.R.styleable.SnackbarLayout_elevation)) {
+                    R.styleable.SnackbarLayout_maxActionInlineWidth, -1);
+            if (a.hasValue(R.styleable.SnackbarLayout_elevation)) {
                 ViewCompat.setElevation(this, a.getDimensionPixelSize(
-                        android.support.design.R.styleable.SnackbarLayout_elevation, 0));
+                        R.styleable.SnackbarLayout_elevation, 0));
             }
             a.recycle();
 
@@ -686,7 +687,7 @@ public final class SweetSnackbar {
             // Make sure that we fit system windows and have a listener to apply any insets
             ViewCompat.setFitsSystemWindows(this, true);
             ViewCompat.setOnApplyWindowInsetsListener(this,
-                    new android.support.v4.view.OnApplyWindowInsetsListener() {
+                    new androidx.core.view.OnApplyWindowInsetsListener() {
                 @Override
                 public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
                     // Copy over the bottom inset as padding so that we're displayed above the
@@ -701,8 +702,8 @@ public final class SweetSnackbar {
         @Override
         protected void onFinishInflate() {
             super.onFinishInflate();
-            mMessageView = (TextView) findViewById(android.support.design.R.id.snackbar_text);
-            mActionView = (Button) findViewById(android.support.design.R.id.snackbar_action);
+            mMessageView = (TextView) findViewById(R.id.snackbar_text);
+            mActionView = (Button) findViewById(R.id.snackbar_action);
         }
 
         public TextView getMessageView() {
@@ -723,9 +724,9 @@ public final class SweetSnackbar {
             }
 
             final int multiLineVPadding = getResources().getDimensionPixelSize(
-                    android.support.design.R.dimen.design_snackbar_padding_vertical_2lines);
+                    R.dimen.design_snackbar_padding_vertical_2lines);
             final int singleLineVPadding = getResources().getDimensionPixelSize(
-                    android.support.design.R.dimen.design_snackbar_padding_vertical);
+                    R.dimen.design_snackbar_padding_vertical);
             final boolean isMultiLine = mMessageView.getLayout().getLineCount() > 1;
 
             boolean remeasure = false;

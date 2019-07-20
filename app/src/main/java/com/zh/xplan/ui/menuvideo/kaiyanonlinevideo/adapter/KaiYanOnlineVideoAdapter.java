@@ -2,7 +2,7 @@ package com.zh.xplan.ui.menuvideo.kaiyanonlinevideo.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;

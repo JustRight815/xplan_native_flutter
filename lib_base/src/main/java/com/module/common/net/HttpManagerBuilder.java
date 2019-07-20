@@ -1,6 +1,6 @@
 package com.module.common.net;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.module.common.net.callback.IDownLoadCallback;
 import com.module.common.net.callback.IRequestCallback;

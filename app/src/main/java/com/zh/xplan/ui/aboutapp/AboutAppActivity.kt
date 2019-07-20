@@ -91,7 +91,7 @@ class AboutAppActivity : BaseActivity(), View.OnClickListener {
             get() {
                 var pi: PackageInfo? = null
                 try {
-                    val pm = XPlanApplication.getInstance().packageManager
+                    val pm = XPlanApplication.getInstance().getPackageManager()
                     pi = pm.getPackageInfo(XPlanApplication.getInstance().packageName,
                             PackageManager.GET_CONFIGURATIONS)
                     return pi

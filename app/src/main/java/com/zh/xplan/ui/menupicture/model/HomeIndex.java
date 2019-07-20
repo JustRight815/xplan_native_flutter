@@ -38,18 +38,10 @@ public class HomeIndex {
         }
 
         public static class ItemContentListBean {
-            /**
-             * imageUrl : https://m.360buyimg.com/mobilecms/s720x322_jfs/t4903/41/12296166/85214/15205dd6/58d92373N127109d8.jpg!q70.jpg
-             * clickUrl : 男装超级品牌类日
-             */
-
             public String imageUrl;
             public String clickUrl;
             public String itemTitle;
             public String itemSubTitle;
-            public String itemSubscript;
-            public String itemRecommendedLanguage;
-            public String itemBackgroundImageUrl;
 
         }
     }

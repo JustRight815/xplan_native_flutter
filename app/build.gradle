@@ -92,7 +92,7 @@ dependencies {
     implementation project(':lib_swipeback')
     implementation project(':flutter')
 
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
     //HTML解析
     implementation 'org.jsoup:jsoup:1.11.3'
     // 图片浏览器 放大缩小图片

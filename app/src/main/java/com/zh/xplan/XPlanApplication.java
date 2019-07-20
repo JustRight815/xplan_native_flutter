@@ -1,21 +1,22 @@
 package com.zh.xplan;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Process;
-import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import androidx.multidex.MultiDex;
+
 import com.bumptech.glide.Glide;
-import com.mob.MobApplication;
 import com.module.common.BaseLib;
 import com.module.common.log.LogUtil;
 import com.module.common.utils.CrashUtils;
 import com.squareup.leakcanary.LeakCanary;
-import com.tencent.bugly.crashreport.CrashReport;
+//import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 import com.zh.swipeback.SlideFinishManager;
 import com.zh.xplan.ui.menupicture.utils.ScreenUtil;
@@ -32,7 +33,7 @@ import java.io.IOException;
  * Created by zh on 2017/5/5.
  */
 
-public class XPlanApplication extends MobApplication {
+public class XPlanApplication extends Application {
     private static XPlanApplication instance = null;
     public  static XPlanApplication getInstance(){
         return instance;
@@ -55,7 +56,7 @@ public class XPlanApplication extends MobApplication {
         if(isMainProcess()){
 //            initLeakCanary();
             CrashUtils.init();
-            CrashReport.initCrashReport(getApplicationContext(), "0785b70a94", AppConstants.isDebug);
+//            CrashReport.initCrashReport(getApplicationContext(), "0785b70a94", AppConstants.isDebug);
             BaseLib.init(this, AppConstants.isDebug)
                     .setBaseUrl(AppConstants.HTTP_HOST)
                     .initImageManager(this);

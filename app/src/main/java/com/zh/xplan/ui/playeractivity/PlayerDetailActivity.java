@@ -1,7 +1,7 @@
 package com.zh.xplan.ui.playeractivity;
 
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
+import androidx.core.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;

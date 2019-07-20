@@ -1,6 +1,6 @@
 package com.zh.xplan.ui.menutoutiao;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseViewHolder;

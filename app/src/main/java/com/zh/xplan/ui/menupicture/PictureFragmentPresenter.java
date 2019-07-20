@@ -3,24 +3,19 @@ package com.zh.xplan.ui.menupicture;
 import com.google.gson.Gson;
 import com.module.common.BaseLib;
 import com.module.common.log.LogUtil;
-import com.module.common.net.rx.NetManager;
-import com.zh.xplan.AppConstants;
 import com.zh.xplan.ui.base.BasePresenter;
 import com.zh.xplan.ui.menupicture.model.Constant;
 import com.zh.xplan.ui.menupicture.model.GridPictureModel;
 import com.zh.xplan.ui.menupicture.model.HomeIndex;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -60,61 +55,35 @@ public class PictureFragmentPresenter extends BasePresenter<PictureFragmentView>
 
 
     public void updateData(final int currentPage, final Boolean isPullDownRefresh){
-        DisposableObserver disposableObserver =  NetManager.get()
-                .url(AppConstants.MEI_TU_MEI_JU_URL)
-                .params("page",currentPage)
-                .build()
+        Observable
+                .timer(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<String>() {
+                .subscribe(new DisposableObserver<Long>() {
                     @Override
-                    public void onNext(String response) {
-                        Document mDocument = Jsoup.parse(response);
-                        List<String> titleList = new ArrayList<>();
-                        Elements es = mDocument.getElementsByClass("xlistju");
-                        for (Element e : es) {
-                            titleList.add(e.text());
-                        }
-                        List<String> hrefList = new ArrayList<>();
-                        List<Integer> heightList = new ArrayList<>();
-                        List<Integer> widthList = new ArrayList<>();
-                        Elements es1 = mDocument.getElementsByClass("chromeimg");
-                        for (Element e : es1) {
-                            hrefList.add(e.attr("src"));
-                            if (null == e.attr("width") || "".equals(e.attr("width"))) {
-                                widthList.add(300); //没有返回宽度时，设置默认高度300
-                            } else {
-                                widthList.add(Integer.parseInt((e.attr("width").substring(0, e.attr("width").length() - 2))));
-                            }
-                            if (null == e.attr("height") || "".equals(e.attr("height"))) {
-                                heightList.add(200); //没有返回高度时 设置默认高度200
-                            } else {
-                                heightList.add(Integer.parseInt((e.attr("height").substring(0, e.attr("height").length() - 2))));
-                            }
-                        }
-
+                    public void onNext(Long aLong) {
                         List<HomeIndex.ItemInfoListBean> mDataList = new ArrayList();
                         List<HomeIndex.ItemInfoListBean> itemInfoList = new ArrayList();
-                        if(currentPage == 0){
-                            try {
-                                InputStream is = BaseLib.getContext().getAssets().open("homeindex.txt");
-                                String text = readTextFromFile(is);
-                                Gson gson = new Gson();
-                                HomeIndex homeIndex = gson.fromJson(text, HomeIndex.class);
-                                if(homeIndex != null && homeIndex.itemInfoList != null  ){
-                                    itemInfoList.addAll(homeIndex.itemInfoList) ;
+                        List<GridPictureModel> pictureModeList = new ArrayList<>();
+                        try {
+                            InputStream is = BaseLib.getContext().getAssets().open("homeindex.txt");
+                            String text = readTextFromFile(is);
+                            Gson gson = new Gson();
+                            HomeIndex homeIndex = gson.fromJson(text, HomeIndex.class);
+                            if(homeIndex != null && homeIndex.itemInfoList != null  ){
+                                itemInfoList.addAll(homeIndex.itemInfoList) ;
+                                if(currentPage == 0){
                                     mDataList.clear();
                                     homeIndex.itemInfoList.remove(homeIndex.itemInfoList.size()-1);
                                     mDataList.addAll(homeIndex.itemInfoList);
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
-                            LogUtil.e("zh","mHomeIndex " + mDataList.size());
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
                         }
-                        List<GridPictureModel> pictureModeList = new ArrayList<>();
+                        LogUtil.e("zh","mHomeIndex " + mDataList.size());
 
-                        if(currentPage == 0 && itemInfoList != null && itemInfoList.size() >0 && hrefList.size() <= 0){
+                        if(currentPage == 0 && itemInfoList != null && itemInfoList.size() >0){
                             for (int i = 0; i < itemInfoList.size(); i++) {
                                 HomeIndex.ItemInfoListBean itemInfoListBean = itemInfoList.get(i);
                                 if( Constant.TYPE_PU_BU_LIU == itemInfoListBean.getItemType()){
@@ -135,28 +104,29 @@ public class PictureFragmentPresenter extends BasePresenter<PictureFragmentView>
                                     break;
                                 }
                             }
-                        }else{
-                            for (int i = 0; i < hrefList.size(); i++) {
-                                List<HomeIndex.ItemInfoListBean.ItemContentListBean> itemContentList = new ArrayList();
-                                HomeIndex.ItemInfoListBean.ItemContentListBean itemContentListBean = new HomeIndex.ItemInfoListBean.ItemContentListBean();
-                                itemContentListBean.itemTitle = titleList.get(i);
-                                itemContentListBean.imageUrl = ("http:" + hrefList.get(i));
-                                itemContentList.add(itemContentListBean);
-                                HomeIndex.ItemInfoListBean itemInfoListBean = new HomeIndex.ItemInfoListBean();
-                                itemInfoListBean.itemType = "pubuliu";
-                                itemInfoListBean.module = "pubuliu";
-                                itemInfoListBean.itemContentList = itemContentList;
-                                mDataList.add(itemInfoListBean);
-
-                                GridPictureModel pictureModel = new GridPictureModel();
-                                pictureModel.setPictureTitle(titleList.get(i));
-                                pictureModel.setPictureUrl("http:" + hrefList.get(i));
-                                pictureModel.setPictureHeight(heightList.get(i));
-                                pictureModel.setPictureWidth(widthList.get(i));
-                                pictureModeList.add(pictureModel);
+                        }
+                        if(currentPage > 0 && itemInfoList != null && itemInfoList.size() >0){
+                            for (int i = 0; i < itemInfoList.size(); i++) {
+                                HomeIndex.ItemInfoListBean itemInfoListBean = itemInfoList.get(i);
+                                if( Constant.TYPE_PU_BU_LIU == itemInfoListBean.getItemType()){
+                                    for (int j = 0; j <itemInfoListBean.itemContentList.size() ; j++) {
+                                        HomeIndex.ItemInfoListBean bean = new HomeIndex.ItemInfoListBean();
+                                        bean.itemType = "pubuliu";
+                                        bean.module = "pubuliu";
+                                        bean.itemContentList =  new ArrayList();
+                                        bean.itemContentList.add(itemInfoListBean.itemContentList.get(j));
+                                        mDataList.add(bean);
+                                        GridPictureModel pictureModel = new GridPictureModel();
+                                        pictureModel.setPictureTitle(itemInfoListBean.itemContentList.get(j).itemTitle);
+                                        pictureModel.setPictureUrl(itemInfoListBean.itemContentList.get(j).imageUrl);
+                                        pictureModel.setPictureHeight(123);
+                                        pictureModel.setPictureWidth(123);
+                                        pictureModeList.add(pictureModel);
+                                    }
+                                    break;
+                                }
                             }
                         }
-
                         if(view != null){
                             view.updatePictureData(true,isPullDownRefresh,mDataList,pictureModeList);
                         }
@@ -164,9 +134,7 @@ public class PictureFragmentPresenter extends BasePresenter<PictureFragmentView>
 
                     @Override
                     public void onError(Throwable e) {
-                        if(view != null){
-                            view.updatePictureData(false,isPullDownRefresh,null,null);
-                        }
+
                     }
 
                     @Override
@@ -174,7 +142,6 @@ public class PictureFragmentPresenter extends BasePresenter<PictureFragmentView>
 
                     }
                 });
-        addDisposable(disposableObserver);
     }
 
     /**

@@ -10,11 +10,11 @@
         android:id="@+id/titlebar"
         layout="@layout/title_bar_menu3" />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
     <!--<FrameLayout-->
         <!--android:id="@+id/fl_video_content"-->

@@ -20,6 +20,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -87,7 +89,7 @@ class SweetSnackbarManager {
             }
 
             if (mCurrentSnackbar != null && cancelSnackbarLocked(mCurrentSnackbar,
-                    android.support.design.widget.Snackbar.Callback.DISMISS_EVENT_CONSECUTIVE)) {
+                    Snackbar.Callback.DISMISS_EVENT_CONSECUTIVE)) {
                 // If we currently have a Snackbar, try and cancel it and wait in line
                 return;
             } else {
@@ -214,7 +216,7 @@ class SweetSnackbarManager {
     }
 
     private void scheduleTimeoutLocked(SnackbarRecord r) {
-        if (r.duration == android.support.design.widget.Snackbar.LENGTH_INDEFINITE || r.duration == SweetSnackbar.LENGTH_INDEFINITE) {
+        if (r.duration == Snackbar.LENGTH_INDEFINITE || r.duration == SweetSnackbar.LENGTH_INDEFINITE) {
             // If we're set to indefinite, we don't want to set a timeout
             return;
         }
@@ -222,7 +224,7 @@ class SweetSnackbarManager {
         int durationMs = LONG_DURATION_MS;
         if (r.duration > 0) {
             durationMs = r.duration;
-        } else if (r.duration == android.support.design.widget.Snackbar.LENGTH_SHORT || r.duration == SweetSnackbar.LENGTH_SHORT) {
+        } else if (r.duration == Snackbar.LENGTH_SHORT || r.duration == SweetSnackbar.LENGTH_SHORT) {
             durationMs = SHORT_DURATION_MS;
         }
         mHandler.removeCallbacksAndMessages(r);

@@ -12,7 +12,7 @@ import com.module.common.utils.compat.ActivityKillerV21_V23;
 import com.module.common.utils.compat.ActivityKillerV24_V25;
 import com.module.common.utils.compat.ActivityKillerV26;
 import com.module.common.utils.compat.IActivityKiller;
-import com.tencent.bugly.crashreport.CrashReport;
+//import com.tencent.bugly.crashreport.CrashReport;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Field;
@@ -163,7 +163,7 @@ public final class CrashUtils {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    CrashReport.postCatchedException(throwable,thread);
+//                    CrashReport.postCatchedException(throwable,thread);
                     boolean isBlackScreen = isBlackScreenException(throwable);
                     Log.e("CrashUtils","========================isBlackScreen====================" + isBlackScreen );
                     if (isBlackScreen) {

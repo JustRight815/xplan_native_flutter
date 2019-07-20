@@ -2,9 +2,11 @@ package com.zh.xplan.ui.menuvideo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,14 +96,14 @@ public class VideoFragment extends BaseFragment {
 	}
 
 	private static class FragmentPagerAdapter extends
-			android.support.v4.app.FragmentPagerAdapter {
+            androidx.fragment.app.FragmentPagerAdapter {
 
 		public FragmentPagerAdapter(FragmentManager fragmentManager) {
 			super(fragmentManager);
 		}
 
 		@Override
-		public android.support.v4.app.Fragment getItem(int position) {
+		public Fragment getItem(int position) {
 			if(position == 0){
 				return FragmentsFactory.createFragment(4);
 			}else{

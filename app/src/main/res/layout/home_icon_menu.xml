@@ -15,7 +15,7 @@
         android:orientation="vertical"
         >
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_home_entrance_vp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

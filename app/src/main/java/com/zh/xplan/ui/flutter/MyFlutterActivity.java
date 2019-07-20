@@ -1,9 +1,9 @@
 package com.zh.xplan.ui.flutter;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import com.zh.xplan.R;
 import io.flutter.facade.Flutter;
 import io.flutter.view.FlutterView;

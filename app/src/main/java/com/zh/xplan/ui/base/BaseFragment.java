@@ -1,10 +1,11 @@
 package com.zh.xplan.ui.base;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * Fragment 基类   可以在此基类上扩展

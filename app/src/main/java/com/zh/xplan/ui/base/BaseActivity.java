@@ -4,16 +4,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntRange;
+
 import com.jaeger.library.StatusBarUtil;
 import com.module.common.log.LogUtil;
 import com.zh.swipeback.BaseSwipeBackActivity;
 import com.zh.xplan.ui.skin.SkinConfigHelper;
+
 import org.qcode.qskinloader.IActivitySkinEventHandler;
 import org.qcode.qskinloader.ISkinActivity;
 import org.qcode.qskinloader.SkinManager;

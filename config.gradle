@@ -9,9 +9,9 @@ ext {
     ]
 
     dependencies = [
-            "appcompatV7"      : 'com.android.support:appcompat-v7:28.0.0',
-            "supportV4"        : 'com.android.support:support-v4:28.0.0',
-            "recyclerviewV7"   : 'com.android.support:recyclerview-v7:28.0.0',
+            "appcompatV7"      : 'androidx.appcompat:appcompat:1.0.0',
+            "supportV4"        : 'androidx.legacy:legacy-support-v4:1.0.0',
+            "recyclerviewV7"   : 'androidx.recyclerview:recyclerview:1.0.0',
             "gson"             : 'com.google.code.gson:gson:2.8.2'
     ]
 }

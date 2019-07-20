@@ -17,7 +17,7 @@ import com.module.common.R;
 /**
  * 圆角图片 圆形图片 加圆圈
  */
-public class RoundImageView extends android.support.v7.widget.AppCompatImageView {
+public class RoundImageView extends androidx.appcompat.widget.AppCompatImageView {
     private Paint mPressPaint;
 
     private int mWidth;

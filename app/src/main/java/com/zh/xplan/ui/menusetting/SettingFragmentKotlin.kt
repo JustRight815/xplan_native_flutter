@@ -22,9 +22,6 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import cn.sharesdk.onekeyshare.OnekeyShare
-import cn.sharesdk.sina.weibo.SinaWeibo
-import cn.sharesdk.tencent.qq.QQ
-import cn.sharesdk.wechat.friends.Wechat
 import com.module.common.BaseLib
 import com.module.common.log.LogUtil
 import com.module.common.net.FileUtil
@@ -180,13 +177,13 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
                 changeHeadPicture()
             R.id.ly_wechat_login ->
                 //微信登录
-                ShareSDKManager.Login(Wechat.NAME)
+                ShareSDKManager.Login("")
             R.id.ly_sina_weibo_login ->
                 //新浪微博登录
-                ShareSDKManager.Login(SinaWeibo.NAME)
+                ShareSDKManager.Login("")
             R.id.ly_qq_login ->
                 //QQ登录
-                ShareSDKManager.Login(QQ.NAME)
+                ShareSDKManager.Login("")
             R.id.ll_share ->
                 //分享软件
                 share()

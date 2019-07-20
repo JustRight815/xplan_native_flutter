@@ -2,7 +2,7 @@ package com.zh.xplan.ui.view.viewswitcher;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.TranslateAnimation;

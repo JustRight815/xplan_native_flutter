@@ -4,7 +4,10 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -104,14 +107,14 @@ public class ImageDetailActivity extends BaseActivity implements UpDownHideLayou
 	}
 
 	private class FragmentPagerAdapter extends
-			android.support.v4.app.FragmentPagerAdapter {
+            androidx.fragment.app.FragmentPagerAdapter {
 
 		public FragmentPagerAdapter() {
 			super(getSupportFragmentManager());
 		}
 
 		@Override
-		public android.support.v4.app.Fragment getItem(int position) {
+		public Fragment getItem(int position) {
 			return ImageDetailFragment.Companion.newInstance(mPictureModelList, position);
 		}
 
