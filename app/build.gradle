@@ -26,6 +26,21 @@ android {
         resConfigs "zh" //app瘦身 只支持中文，不支持国际化
     }
 
+    signingConfigs {
+        release {//发布版本的签名配置
+            storeFile file('../app/keystore')
+            keyAlias 'key0'
+            storePassword 'zhenghao'
+            keyPassword 'zhenghao'
+        }
+        debug {//调试版本的签名配置
+            storeFile file('../app/keystore')
+            keyAlias 'key0'
+            storePassword 'zhenghao'
+            keyPassword 'zhenghao'
+        }
+    }
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -41,6 +56,7 @@ android {
             ndk {
                 abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
             }
+            signingConfig signingConfigs.debug
         }
 
         release {
@@ -51,6 +67,7 @@ android {
             ndk {
                 abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
             }
+            signingConfig signingConfigs.release
         }
     }
 
