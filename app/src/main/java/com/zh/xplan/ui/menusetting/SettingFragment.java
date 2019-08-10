@@ -55,7 +55,6 @@ import com.zh.xplan.ui.logisticsdetail.LogisticsDetailActivity;
 import com.zh.xplan.ui.robot.RobotKotlinActivity;
 import com.zh.xplan.ui.utils.TitleUtil;
 import com.zh.xplan.ui.view.addialog.AdDialog;
-import com.zh.xplan.ui.weather.WeatherMoreActivity;
 import com.zh.xplan.ui.weather.model.WeatherBeseModel;
 
 import org.qcode.qskinloader.SkinManager;
@@ -159,14 +158,12 @@ public class SettingFragment extends BaseFragment implements OnClickListener,Set
 	 * @param mView
 	 */
 	private void initView(View mView) {
-		rl_weather = (RelativeLayout) mView.findViewById(R.id.rl_weather);
 		header_iv_weather = (ImageView) mView.findViewById(R.id.header_iv_weather);
 		header_tv_temperature = (TextView) mView.findViewById(R.id.header_tv_temperature);
 		tv_pm = (TextView) mView.findViewById(R.id.tv_pm);
 		tv_pm_str = (TextView) mView.findViewById(R.id.tv_pm_str);
 		tv_city = (TextView) mView.findViewById(R.id.tv_city);
 		tv_weathr = (TextView) mView.findViewById(R.id.tv_weathr);
-		rl_weather.setOnClickListener(this);
 
 		mHeadPicture = (RoundImageView) mView.findViewById(R.id.iv_head_picture);
 		TextView versionName = (TextView) mView
@@ -222,12 +219,6 @@ public class SettingFragment extends BaseFragment implements OnClickListener,Set
 	public void onClick(View v) {
 		int id = v.getId();
 		switch (id) {
-			case R.id.rl_weather:// 打开或关闭侧滑菜单
-				Intent weatherIntent = new Intent(getActivity(),WeatherMoreActivity.class);
-				weatherIntent.putExtra("resultBean",resultBean);
-				startActivity(weatherIntent);
-				getActivity().overridePendingTransition(0,0);
-				break;
 			case R.id.iv_head_picture:
 				//编辑头像
 				changeHeadPicture();

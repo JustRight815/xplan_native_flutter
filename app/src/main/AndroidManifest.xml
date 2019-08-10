@@ -118,6 +118,7 @@
         android:largeHeap="true"
         android:screenOrientation="portrait"
         tools:replace="android:label,android:allowBackup"
+        tools:ignore="GoogleAppIndexingWarning"
         tools:overrideLibrary="com.module.common,com.shuyu.gsyvideoplayer.armv5"
         >
         <activity
@@ -187,12 +188,6 @@
 
         <activity
             android:name="com.zh.xplan.ui.playeractivity.PlayerDetailActivity"
-            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
-            android:exported="false"
-            android:theme="@style/AppTheme.Transparent" />
-        <activity
-            android:name="com.zh.xplan.ui.weather.WeatherMoreActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />

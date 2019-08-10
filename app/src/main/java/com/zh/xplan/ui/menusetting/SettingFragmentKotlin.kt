@@ -40,7 +40,6 @@ import com.zh.xplan.ui.iptoolsactivity.IpToolsActivity
 import com.zh.xplan.ui.robot.RobotKotlinActivity
 import com.zh.xplan.ui.utils.TitleUtil
 import com.zh.xplan.ui.view.addialog.AdDialog
-import com.zh.xplan.ui.weather.WeatherMoreActivity
 import com.zh.xplan.ui.weather.model.WeatherBeseModel
 import kotlinx.android.synthetic.main.fragment_setting.*
 import org.qcode.qskinloader.SkinManager
@@ -161,13 +160,6 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.rl_weather ->// 打开或关闭侧滑菜单
-            {
-                val weatherIntent = Intent(activity, WeatherMoreActivity::class.java)
-                weatherIntent.putExtra("resultBean", resultBean)
-                startActivity(weatherIntent)
-                activity?.overridePendingTransition(0, 0)
-            }
             R.id.iv_head_picture ->
                 //编辑头像
                 changeHeadPicture()
