@@ -1,10 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.getkeepsafe.dexcount' // 方法个数统计
 apply plugin: 'AndResGuard'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
-//apply plugin: 'kotlin-kapt'//hotchemi:permissionsdispatcher 支持kotlin
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -129,9 +126,6 @@ dependencies {
     implementation 'com.facebook.rebound:rebound:0.3.8'
     //桌面消息角标 https://github.com/leolin310148/ShortcutBadger
     implementation "me.leolin:ShortcutBadger:1.1.21@aar"
-    // kotlin使用
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41"
-
 
 }
 

@@ -1,6 +1,9 @@
 package com.zh.xplan.ui.webviewActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -108,6 +112,7 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
 		}
 	}
 
+	@SuppressLint("SetJavaScriptEnabled")
 	private void initWebView(WebView webView) {
 		//		mProgressbar = (ProgressBar) LayoutInflater.from(this).inflate(
 //				R.layout.custom_webview_progressbar, null);
@@ -127,8 +132,14 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
 		webSettings.setAllowFileAccess(false);
 		webSettings.setAllowFileAccessFromFileURLs(false);
 		webSettings.setAllowUniversalAccessFromFileURLs(false);
-
+		//JS交互
 		webSettings.setJavaScriptEnabled(true);
+
+		//允许加载图片
+		webSettings.setBlockNetworkImage(false);
+		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+		webSettings.setLoadsImagesAutomatically(true);
+
 		webSettings.setDomStorageEnabled(true);
 		webSettings.setUseWideViewPort(true);
 		String appCachePath = XPlanApplication.getInstance().getCacheDir()
@@ -141,6 +152,11 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
 		webSettings.setUseWideViewPort(true);
 		webSettings.setLoadWithOverviewMode(true);
 
+		//允许http和https混合
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+		}
+
 		webView.setWebChromeClient(new WebChromeClient() {
 			// 监听网页进度
 			@Override
@@ -152,6 +168,7 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
 				if (newProgress == 100) {
 					Handler h = new Handler();
 					h.postDelayed(new Runnable() {
+						@Override
 						public void run() {
 							mProgressbar.setVisibility(View.GONE);
 							currentProgress = 0;
@@ -181,6 +198,12 @@ public class WebviewActivity extends BaseActivity implements View.OnClickListene
 				// 返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
 				view.loadUrl(url);
 				return true;
+			}
+
+			@Override
+			public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+				//忽略证书校验
+				handler.proceed();
 			}
 		});
 	}

@@ -1,9 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'bugly'
-bugly {
-    appId = '0785b70a94' // 注册时分配的App ID
-    appKey = '3cb06959-1726-4840-9fed-3446c40639e9' // 注册时分配的App Key
-}
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion

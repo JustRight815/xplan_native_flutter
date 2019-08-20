@@ -154,6 +154,31 @@
                 android:background="#11000000" />
 
             <LinearLayout
+                android:id="@+id/ll_kotlin"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:background="@drawable/btn_bottom_selector"
+                android:padding="10dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dip"
+                    android:text="Flutter模块"
+                    skin:enable="true"
+                    android:textColor="@color/text_color_black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#11000000" />
+
+            <LinearLayout
                 android:id="@+id/ll_about"
                 android:layout_width="match_parent"
                 android:layout_height="50dip"
@@ -403,30 +428,7 @@
                 android:layout_marginRight="10dp"
                 android:background="#11000000" />
 
-            <LinearLayout
-                android:id="@+id/ll_kotlin"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:background="@drawable/btn_bottom_selector"
-                android:padding="10dip">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="10dip"
-                    android:text="kotlin测试"
-                    skin:enable="true"
-                    android:textColor="@color/text_color_black"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#11000000" />
             <LinearLayout
                 android:id="@+id/ll_camera"
                 android:layout_width="match_parent"
