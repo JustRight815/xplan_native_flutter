@@ -3,12 +3,14 @@ package com.zh.xplan.ui.playeractivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
-import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+
 import com.module.common.image.ImageLoader;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
@@ -17,6 +19,7 @@ import com.shuyu.gsyvideoplayer.utils.NetworkUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.zh.xplan.R;
+
 import moe.codeest.enviews.ENDownloadView;
 
 /**
@@ -140,7 +143,7 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
         }
         if (mCurrentState == CURRENT_STATE_PLAYING) {
             try {
-                GSYVideoManager.instance().getMediaPlayer().pause();
+                GSYVideoManager.instance().getPlayer().pause();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -165,7 +168,7 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
                 }
             }
             try {
-                GSYVideoManager.instance().getMediaPlayer().start();
+                GSYVideoManager.instance().getPlayer().start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

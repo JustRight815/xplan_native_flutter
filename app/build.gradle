@@ -8,7 +8,6 @@ android {
     defaultConfig {
         applicationId rootProject.ext.android.applicationId
         minSdkVersion rootProject.ext.android.minSdkVersion
-        //gsyvideoplayer 默认兼容到16   强制覆盖<uses-sdk tools:overrideLibrary="com.shuyu.gsyvideoplayer.lib,com.shuyu.gsyvideoplayer,tv.danmaku.ijk.media.exo2,com.google.android.exoplayer2.ext.rtmp,com.shuyu.gsyvideoplayer.ex_so,shuyu.com.androidvideocache,net.butterflytv.rtmp_client"/>
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
@@ -113,9 +112,8 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
     // 基于ijkplayer的视频播放器
     //    compile 'com.shuyu:GSYVideoPlayer:2.0.8'
-    implementation 'com.shuyu:gsyVideoPlayer-java:3.0.0'
-    implementation 'com.shuyu:gsyVideoPlayer-armv5:3.0.0'
-    // 滑动返回界面
+    implementation 'com.shuyu:gsyVideoPlayer-java:7.0.2'
+    implementation 'com.shuyu:gsyVideoPlayer-armv7a:7.0.2'
     // 动态权限处理 放到common里会报错
     implementation 'com.github.hotchemi:permissionsdispatcher:2.4.0'
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:2.4.0"
@@ -124,7 +122,6 @@ dependencies {
     implementation 'org.litepal.android:core:1.5.0'
     //Facebook Spring动画库
     implementation 'com.facebook.rebound:rebound:0.3.8'
-    //桌面消息角标 https://github.com/leolin310148/ShortcutBadger
     implementation "me.leolin:ShortcutBadger:1.1.21@aar"
 
 }

@@ -3,10 +3,6 @@ package com.zh.xplan.ui.menutoutiao;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +12,11 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.module.common.log.LogUtil;
@@ -24,8 +25,6 @@ import com.module.common.utils.NetworkUtils;
 import com.module.common.utils.SpUtil;
 import com.module.common.view.snackbar.SnackbarUtils;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
-import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.zh.xplan.R;
 import com.zh.xplan.ui.base.BaseFragment;
 import com.zh.xplan.ui.menutoutiao.model.News;
@@ -96,7 +95,7 @@ public class NewsListFragment extends BaseFragment implements BaseQuickAdapter.R
             lazyLoad();
         }else {
             isVisible=false;
-            GSYVideoPlayer.releaseAllVideos();
+            GSYVideoManager.releaseAllVideos();
         }
     }
 
@@ -275,7 +274,7 @@ public class NewsListFragment extends BaseFragment implements BaseQuickAdapter.R
                             //当前播放的位置
                             int position = GSYVideoManager.instance().getPlayPosition();
                             if((position < firstVisibleItem || position > lastVisibleItem)){
-                                GSYVideoPlayer.releaseAllVideos();
+                                GSYVideoManager.releaseAllVideos();
                                 mNewsAdapter.notifyDataSetChanged();
                             }
                         }
@@ -509,13 +508,13 @@ public class NewsListFragment extends BaseFragment implements BaseQuickAdapter.R
     }
 
     public boolean onBackPressed() {
-        return StandardGSYVideoPlayer.backFromWindowFull(getActivity());
+        return GSYVideoManager.backFromWindowFull(getActivity());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        GSYVideoPlayer.releaseAllVideos();
+        GSYVideoManager.releaseAllVideos();
     }
 
     @Override
@@ -526,7 +525,7 @@ public class NewsListFragment extends BaseFragment implements BaseQuickAdapter.R
     @Override
     public void onDestroy() {
         super.onDestroy();
-        GSYVideoPlayer.releaseAllVideos();
+        GSYVideoManager.releaseAllVideos();
     }
 
 }

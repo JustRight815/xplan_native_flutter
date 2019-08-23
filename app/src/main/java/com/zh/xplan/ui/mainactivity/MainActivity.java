@@ -2,25 +2,26 @@ package com.zh.xplan.ui.mainactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.navigation.NavigationView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.widget.SwitchCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.navigation.NavigationView;
 import com.jaeger.library.StatusBarUtil;
 import com.module.common.log.LogUtil;
 import com.module.common.view.bottombar.BottomBar;
 import com.module.common.view.bottombar.BottomBarItem;
 import com.module.common.view.bottombar.BottomBarTextColorAttrHandler;
 import com.module.common.view.snackbar.SnackbarUtils;
-import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.zh.xplan.R;
 import com.zh.xplan.XPlanApplication;
 import com.zh.xplan.ui.aboutapp.AboutAppActivity;
@@ -141,7 +142,7 @@ public class MainActivity extends BaseActivity
         mBottomBar.setOnItemSelectedListener(new BottomBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(BottomBarItem bottomBarItem, int position) {
-                GSYVideoPlayer.releaseAllVideos();
+                GSYVideoManager.releaseAllVideos();
                 switch (position) {
                     case 0:
                         changeStatusBarColor();

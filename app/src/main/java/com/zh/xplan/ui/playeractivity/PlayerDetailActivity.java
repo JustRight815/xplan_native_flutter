@@ -1,7 +1,6 @@
 package com.zh.xplan.ui.playeractivity;
 
 import android.os.Bundle;
-import androidx.core.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -9,12 +8,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.widget.NestedScrollView;
+
 import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.module.common.log.LogUtil;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
-import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.zh.xplan.R;
 import com.zh.xplan.ui.base.BaseActivity;
 import com.zh.xplan.ui.menutoutiao.GetVideoUrl;
@@ -162,7 +162,7 @@ public class PlayerDetailActivity extends BaseActivity {
             }
         });
 
-        detailPlayer.setStandardVideoAllCallBack(new SampleListener() {
+        detailPlayer.setVideoAllCallBack(new SampleListener() {
             @Override
             public void onPrepared(String url, Object... objects) {
                 super.onPrepared(url, objects);
@@ -211,7 +211,7 @@ public class PlayerDetailActivity extends BaseActivity {
             orientationUtils.backToProtVideo();
         }
 
-        if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
+        if (GSYVideoManager.backFromWindowFull(this)) {
             return;
         }
         super.onBackPressed();
@@ -233,10 +233,11 @@ public class PlayerDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        GSYVideoPlayer.releaseAllVideos();
+        GSYVideoManager.releaseAllVideos();
         //GSYPreViewManager.instance().releaseMediaPlayer();
-        if (orientationUtils != null)
+        if (orientationUtils != null){
             orientationUtils.releaseListener();
+        }
     }
 
 //    @Override

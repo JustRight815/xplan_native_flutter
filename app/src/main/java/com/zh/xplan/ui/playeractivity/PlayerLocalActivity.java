@@ -5,9 +5,9 @@ import android.transition.Transition;
 import android.view.View;
 
 import com.jaeger.library.StatusBarUtil;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
-import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.zh.xplan.R;
 import com.zh.xplan.ui.base.BaseActivity;
 import com.zh.xplan.ui.menuvideo.localvideo.model.LocalVideoBean;
@@ -116,10 +116,10 @@ public class PlayerLocalActivity extends BaseActivity {
         if (orientationUtils != null) {
             orientationUtils.backToProtVideo();
         }
-        if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
+        if (GSYVideoManager.backFromWindowFull(this)) {
             return;
         }
-        GSYVideoPlayer.releaseAllVideos();
+        GSYVideoManager.releaseAllVideos();
         super.onBackPressed();
     }
 }

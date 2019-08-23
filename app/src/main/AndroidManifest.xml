@@ -77,7 +77,6 @@
 
     <!-- 视频播放横竖屏 -->
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-    <uses-sdk tools:overrideLibrary="com.shuyu.gsyvideoplayer.armv5,com.shuyu.gsyvideoplayer.lib,com.shuyu.gsyvideoplayer,tv.danmaku.ijk.media.exo2,com.google.android.exoplayer2.ext.rtmp,com.shuyu.gsyvideoplayer.ex_so,shuyu.com.androidvideocache,net.butterflytv.rtmp_client"/>
     <!-- 拍照 拍摄视频 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>

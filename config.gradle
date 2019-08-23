@@ -2,7 +2,7 @@ ext {
     android = [
             compileSdkVersion   : 28,
             applicationId       : 'com.zh.xplan',
-            minSdkVersion       : 16,
+            minSdkVersion       : 19,
             targetSdkVersion    : 23,
             versionCode         : 102,
             versionName         : '1.0.2',

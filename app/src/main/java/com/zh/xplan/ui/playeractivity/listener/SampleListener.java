@@ -1,12 +1,12 @@
 package com.zh.xplan.ui.playeractivity.listener;
 
-import com.shuyu.gsyvideoplayer.listener.StandardVideoAllCallBack;
+import com.shuyu.gsyvideoplayer.listener.VideoAllCallBack;
 
 /**
  * Created by shuyu on 2016/11/23.
  */
 
-public class SampleListener implements StandardVideoAllCallBack {
+public class SampleListener implements VideoAllCallBack {
 
     @Override
     public void onClickStartIcon(String url, Object... objects) {
@@ -99,6 +99,11 @@ public class SampleListener implements StandardVideoAllCallBack {
 
     @Override
     public void onClickBlankFullscreen(String url, Object... objects) {
+
+    }
+
+    @Override
+    public void onStartPrepared(String url, Object... objects) {
 
     }
 

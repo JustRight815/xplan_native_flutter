@@ -361,7 +361,7 @@ public class NewsAdapter extends BaseQuickAdapter<News, BaseViewHolder> {
         //gsyVideoPlayer.setSpeed(2);
 
         gsyVideoPlayer.setPlayPosition(helper.getLayoutPosition());
-        gsyVideoPlayer.setStandardVideoAllCallBack(new SampleListener(){
+        gsyVideoPlayer.setVideoAllCallBack(new SampleListener(){
             @Override
             public void onPrepared(String url, Object... objects) {
                 super.onPrepared(url, objects);

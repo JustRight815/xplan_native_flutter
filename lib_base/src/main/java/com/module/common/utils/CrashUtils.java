@@ -164,6 +164,7 @@ public final class CrashUtils {
                 @Override
                 public void run() {
 //                    CrashReport.postCatchedException(throwable,thread);
+                    throwable.printStackTrace();
                     boolean isBlackScreen = isBlackScreenException(throwable);
                     Log.e("CrashUtils","========================isBlackScreen====================" + isBlackScreen );
                     if (isBlackScreen) {

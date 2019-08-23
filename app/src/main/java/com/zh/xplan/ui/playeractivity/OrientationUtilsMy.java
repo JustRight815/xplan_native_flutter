@@ -90,6 +90,7 @@ public class OrientationUtilsMy extends OrientationUtils {
     /**
      * 点击切换的逻辑，比如竖屏的时候点击了就是切换到横屏不会受屏幕的影响
      */
+    @Override
     public void resolveByClick() {
         mClick = true;
         if (mIsLand == 0) {
@@ -124,12 +125,14 @@ public class OrientationUtilsMy extends OrientationUtils {
     /**
      * 列表返回的样式判断。因为立即旋转会导致界面跳动的问题
      */
+    @Override
     public int backToProtVideo() {
         if (mIsLand > 0) {
             mClick = true;
             activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            if (gsyVideoPlayer != null)
+            if (gsyVideoPlayer != null){
                 gsyVideoPlayer.getFullscreenButton().setImageResource(gsyVideoPlayer.getEnlargeImageRes());
+            }
             mIsLand = 0;
             mClickPort = false;
             return 500;
@@ -138,10 +141,12 @@ public class OrientationUtilsMy extends OrientationUtils {
     }
 
 
+    @Override
     public boolean isEnable() {
         return mEnable;
     }
 
+    @Override
     public void setEnable(boolean enable) {
         this.mEnable = enable;
         if (mEnable) {
@@ -151,54 +156,66 @@ public class OrientationUtilsMy extends OrientationUtils {
         }
     }
 
+    @Override
     public void releaseListener() {
         if (orientationEventListener != null) {
             orientationEventListener.disable();
         }
     }
 
+    @Override
     public boolean isClick() {
         return mClick;
     }
 
+    @Override
     public void setClick(boolean Click) {
         this.mClick = mClick;
     }
 
+    @Override
     public boolean isClickLand() {
         return mClickLand;
     }
 
+    @Override
     public void setClickLand(boolean ClickLand) {
         this.mClickLand = ClickLand;
     }
 
+    @Override
     public int getIsLand() {
         return mIsLand;
     }
 
+    @Override
     public void setIsLand(int IsLand) {
         this.mIsLand = IsLand;
     }
 
 
+    @Override
     public boolean isClickPort() {
         return mClickPort;
     }
 
+    @Override
     public void setClickPort(boolean ClickPort) {
         this.mClickPort = ClickPort;
     }
 
+    @Override
     public int getScreenType() {
         return screenType;
     }
 
+    @Override
     public void setScreenType(int screenType) {
         this.screenType = screenType;
     }
 
 
+    @Override
     public boolean isRotateWithSystem() {
         return mRotateWithSystem;
     }
@@ -207,6 +224,7 @@ public class OrientationUtilsMy extends OrientationUtils {
      * 是否更新系统旋转，false的话，系统禁止旋转也会跟着旋转
      * @param rotateWithSystem 默认true
      */
+    @Override
     public void setRotateWithSystem(boolean rotateWithSystem) {
         this.mRotateWithSystem = rotateWithSystem;
     }

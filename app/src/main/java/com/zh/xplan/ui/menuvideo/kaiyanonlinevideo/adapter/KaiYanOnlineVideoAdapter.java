@@ -2,8 +2,9 @@ package com.zh.xplan.ui.menuvideo.kaiyanonlinevideo.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import androidx.recyclerview.widget.GridLayoutManager;
 import android.view.View;
+
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -104,7 +105,7 @@ public class KaiYanOnlineVideoAdapter extends BaseMultiItemQuickAdapter<ItemList
         gsyVideoPlayer.setNeedLockFull(true);
         //gsyVideoPlayer.setSpeed(2);
         gsyVideoPlayer.setPlayPosition(helper.getLayoutPosition());
-        gsyVideoPlayer.setStandardVideoAllCallBack(new SampleListener(){
+        gsyVideoPlayer.setVideoAllCallBack(new SampleListener(){
             @Override
             public void onPrepared(String url, Object... objects) {
                 super.onPrepared(url, objects);

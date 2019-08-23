@@ -2,22 +2,21 @@ package com.zh.xplan.ui.menuvideo.kaiyanonlinevideo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.module.common.log.LogUtil;
 import com.module.common.view.snackbar.SnackbarUtils;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
-import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.zh.xplan.AppConstants;
 import com.zh.xplan.R;
 import com.zh.xplan.ui.base.BaseFragment;
@@ -57,7 +56,7 @@ public class KaiYanOnlineVideoFragment extends BaseFragment implements OnClickLi
 		super.setUserVisibleHint(isVisibleToUser);
 		if (getUserVisibleHint()){
 		}else {
-			GSYVideoPlayer.releaseAllVideos();
+			GSYVideoManager.releaseAllVideos();
 		}
 	}
 
@@ -129,7 +128,7 @@ public class KaiYanOnlineVideoFragment extends BaseFragment implements OnClickLi
 					//当前播放的位置
 					int position = GSYVideoManager.instance().getPlayPosition();
 					if((position < firstVisibleItem || position > lastVisibleItem)){
-						GSYVideoPlayer.releaseAllVideos();
+						GSYVideoManager.releaseAllVideos();
 						mOnlineVideoAdapter.notifyDataSetChanged();
 					}
 				}
@@ -138,7 +137,7 @@ public class KaiYanOnlineVideoFragment extends BaseFragment implements OnClickLi
 	}
 
 	public boolean onBackPressed() {
-        return StandardGSYVideoPlayer.backFromWindowFull(getActivity());
+        return GSYVideoManager.backFromWindowFull(getActivity());
     }
 
 
@@ -146,14 +145,14 @@ public class KaiYanOnlineVideoFragment extends BaseFragment implements OnClickLi
 	public void onHiddenChanged(boolean hidden) {
 		super.onHiddenChanged(hidden);
 		if (hidden){
-			GSYVideoPlayer.releaseAllVideos();
+			GSYVideoManager.releaseAllVideos();
 		}
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		GSYVideoPlayer.releaseAllVideos();
+		GSYVideoManager.releaseAllVideos();
 	}
 
 	@Override
@@ -162,7 +161,7 @@ public class KaiYanOnlineVideoFragment extends BaseFragment implements OnClickLi
 			presenter.onDestory();
 		}
 		super.onDestroy();
-		GSYVideoPlayer.releaseAllVideos();
+		GSYVideoManager.releaseAllVideos();
 	}
 
 	/**
