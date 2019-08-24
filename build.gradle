@@ -10,10 +10,11 @@ buildscript {
             name 'Google'
         }
 
-        mavenCentral()// ShortcutBadger 需要
+        mavenCentral()
+        google()// ShortcutBadger 需要
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         // 微信资源混淆
         classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.12'
         // kotlin使用
