@@ -6,8 +6,6 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -20,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -81,7 +82,7 @@ public class CityPickerActivity extends BaseActivity implements View.OnClickList
         initTitle();
         initData();
         initView();
-        CityPickerActivityPermissionsDispatcher.initLocationWithCheck(this);
+        CityPickerActivityPermissionsDispatcher.initLocationWithPermissionCheck(this);
     }
 
     private void initTitle() {
@@ -321,7 +322,7 @@ public class CityPickerActivity extends BaseActivity implements View.OnClickList
                 if(isPermissioned){
                     mLocationClient.start();
                 }else{
-                    CityPickerActivityPermissionsDispatcher.initLocationWithCheck(CityPickerActivity.this);
+                    CityPickerActivityPermissionsDispatcher.initLocationWithPermissionCheck(CityPickerActivity.this);
                 }
             }
         });

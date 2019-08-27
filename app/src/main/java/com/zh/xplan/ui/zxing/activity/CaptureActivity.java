@@ -29,9 +29,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -43,6 +40,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
@@ -157,7 +157,7 @@ public class CaptureActivity extends BaseActivity implements Callback, View.OnCl
         tv_light.setOnClickListener(this);
         tv_gallery.setOnClickListener(this);
         iv_back.setOnClickListener(this);
-        CaptureActivityPermissionsDispatcher.initCameraWithCheck(this);
+        CaptureActivityPermissionsDispatcher.initCameraWithPermissionCheck(this);
     }
 
     @NeedsPermission(Manifest.permission.CAMERA)

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'AndResGuard'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -115,8 +116,8 @@ dependencies {
     implementation 'com.shuyu:gsyVideoPlayer-java:7.0.2'
     implementation 'com.shuyu:gsyVideoPlayer-armv7a:7.0.2'
     // 动态权限处理 放到common里会报错
-    implementation 'com.github.hotchemi:permissionsdispatcher:2.4.0'
-    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:2.4.0"
+    implementation 'org.permissionsdispatcher:permissionsdispatcher:4.5.0'
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
     // tab
     implementation 'me.weyye.ColorTrackTabLayout:library:1.0.1'
     implementation 'org.litepal.android:core:1.5.0'

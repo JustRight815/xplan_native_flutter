@@ -4,9 +4,6 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +13,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.module.common.log.LogUtil;
 import com.zh.xplan.R;
@@ -67,7 +68,7 @@ public class LocalVideoFragment extends BaseFragment implements
 			isVisible=true;
 			lazyLoad();
 			LogUtil.e("zh","setUserVisibleHint getDatasWithCheck()");
-			LocalVideoFragmentPermissionsDispatcher.getDatasWithCheck(LocalVideoFragment.this);
+			LocalVideoFragmentPermissionsDispatcher.getDatasWithPermissionCheck(LocalVideoFragment.this);
 		}else {
 			isVisible=false;
 		}
@@ -124,7 +125,7 @@ public class LocalVideoFragment extends BaseFragment implements
 			return;
 		}
 		LogUtil.e("zh","getDatasWithCheck()");
-		LocalVideoFragmentPermissionsDispatcher.getDatasWithCheck(LocalVideoFragment.this);
+		LocalVideoFragmentPermissionsDispatcher.getDatasWithPermissionCheck(LocalVideoFragment.this);
 	}
 
 	/**
@@ -137,7 +138,7 @@ public class LocalVideoFragment extends BaseFragment implements
 		mPtrFrame.setPtrHandler(new PtrHandler() {
 			@Override
 			public void onRefreshBegin(PtrFrameLayout frame) {
-				LocalVideoFragmentPermissionsDispatcher.getDatasWithCheck(LocalVideoFragment.this);
+				LocalVideoFragmentPermissionsDispatcher.getDatasWithPermissionCheck(LocalVideoFragment.this);
 			}
 		});
 		mToTopBtn = (Button) mView.findViewById(R.id.btn_top);

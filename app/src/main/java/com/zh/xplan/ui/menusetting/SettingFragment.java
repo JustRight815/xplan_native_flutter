@@ -345,7 +345,7 @@ public class SettingFragment extends BaseFragment implements OnClickListener,Set
 			@Override
 			public void onClick(View arg0) {
 				// 从相机截取头像
-				SettingFragmentPermissionsDispatcher.cameraWithCheck(SettingFragment.this);
+				SettingFragmentPermissionsDispatcher.cameraWithPermissionCheck(SettingFragment.this);
 				dialog.dismiss();
 			}
 		});
@@ -375,7 +375,7 @@ public class SettingFragment extends BaseFragment implements OnClickListener,Set
 				@Override
 				public void onClick(DialogInterface arg0, int arg1) {
 //					getApk();
-					SettingFragmentPermissionsDispatcher.getApkWithCheck(SettingFragment.this);
+					SettingFragmentPermissionsDispatcher.getApkWithPermissionCheck(SettingFragment.this);
 				}
 			})
 			.create();
