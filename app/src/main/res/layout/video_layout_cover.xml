@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:skin="http://schemas.android.com/android/skin"
     skin:enable="true"
     android:background="@color/black">
@@ -22,15 +21,6 @@
         skin:enable="true"
         android:background="@color/lightgray"
         >
-
-       <!-- <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/thumbImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:viewAspectRatio="1"
-            app:actualImageScaleType="centerCrop"
-            skin:enable="true"
-            skin:drawShadow="@color/bg_img_transparent"/>-->
 
         <ImageView
             android:id="@+id/thumbImage"
@@ -141,14 +131,6 @@
         android:layout_centerVertical="true"
         android:visibility="invisible" />
 
-    <!--<moe.codeest.enviews.ENPlayView-->
-        <!--android:id="@+id/start"-->
-        <!--android:layout_width="60dp"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_gravity="center_vertical" />-->
-    <!-- 不使用默认的开始暂停图片 -->
     <ImageView
         android:id="@+id/start"
         android:layout_width="50dp"

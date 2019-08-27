@@ -43,7 +43,7 @@ public class PlayerLocalActivity extends BaseActivity {
 
     private void init() {
         videoPlayer  = (SampleCoverVideo) findViewById(R.id.video_player);
-        videoPlayer.setUp(mLocalVideoBean.getPath(), false, mLocalVideoBean.getTitle());
+        videoPlayer.setUp("file:///" + mLocalVideoBean.getPath(), false, mLocalVideoBean.getTitle());
 
         //增加封面
         videoPlayer.loadCoverImage("file:///" + mLocalVideoBean.getPath(),0);
