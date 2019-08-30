@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import com.zh.xplan.R;
+import com.zh.xplan.ui.playeractivity.PlayerDetailActivity;
 import com.zh.xplan.ui.zxing.activity.CaptureActivity;
 import org.jetbrains.annotations.NotNull;
 import io.flutter.facade.Flutter;
@@ -16,6 +17,7 @@ import io.flutter.view.FlutterView;
 public class MyFlutterActivity extends AppCompatActivity {
     private static final String NATIVE_CHANNEL = "flutter_open_native";
     private static final String NATIVE_OPEN_CAPTURE = "flutter_open_capture";
+    private static final String NATIVE_OPEN_PLAY_DETAIL = "flutter_open_play_detail";
 
     private FlutterView flutterView;
 
@@ -50,7 +52,16 @@ public class MyFlutterActivity extends AppCompatActivity {
                         if (NATIVE_OPEN_CAPTURE.equals(methodCall.method)) {
                             //打开扫一扫
                             startActivity(new Intent(MyFlutterActivity.this, CaptureActivity.class));
-                        } else {
+                        } else if (NATIVE_OPEN_PLAY_DETAIL.equals(methodCall.method)) {
+                            //视频
+                            Intent intent = new Intent(MyFlutterActivity.this, PlayerDetailActivity.class);
+                            intent.putExtra("playUrl", methodCall.argument("playUrl").toString());
+                            intent.putExtra("playTitle", methodCall.argument("playTitle").toString());
+                            intent.putExtra("playDescription", "");
+                            intent.putExtra("playPic",methodCall.argument("playPic").toString());
+                            intent.putExtra("playId", methodCall.argument("playId").toString());
+                            startActivity(intent);
+                        }{
                             result.notImplemented();
                         }
                     }
