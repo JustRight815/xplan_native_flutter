@@ -1,10 +1,17 @@
 package com.zh.xplan.ui.flutter;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.zh.xplan.R;
 import com.zh.xplan.ui.playeractivity.PlayerDetailActivity;
 import com.zh.xplan.ui.zxing.activity.CaptureActivity;
@@ -25,6 +32,7 @@ public class MyFlutterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flutter);
+        transparentStatusBar(this);
         flutterView = Flutter.createView(
                 this,
                 getLifecycle(),
@@ -66,6 +74,21 @@ public class MyFlutterActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    /**
+     * 使状态栏透明
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static void transparentStatusBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+        } else {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
 
     @Override

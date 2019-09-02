@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="10dip"
-                    android:text="Flutter模块"
+                    android:text="Flutter版本"
                     skin:enable="true"
                     android:textColor="@color/text_color_black"
                     android:textSize="16sp" />
