@@ -18,10 +18,12 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
- import com.module.common.BaseLib
+import androidx.appcompat.app.AlertDialog
+import com.module.common.BaseLib
 import com.module.common.log.LogUtil
 import com.module.common.net.FileUtil
 import com.module.common.net.callback.IDownLoadCallback
@@ -36,11 +38,15 @@ import com.zh.xplan.ui.aboutapp.AboutAppActivity
 import com.zh.xplan.ui.base.BaseFragment
 import com.zh.xplan.ui.camera.RecordVideoSet
 import com.zh.xplan.ui.camera.record.CustomCameraActivity
+import com.zh.xplan.ui.flutter.MyFlutterActivity
 import com.zh.xplan.ui.iptoolsactivity.IpToolsActivity
+import com.zh.xplan.ui.logisticsdetail.LogisticsDetailActivity
 import com.zh.xplan.ui.robot.RobotKotlinActivity
 import com.zh.xplan.ui.utils.TitleUtil
 import com.zh.xplan.ui.view.addialog.AdDialog
 import com.zh.xplan.ui.weather.model.WeatherBeseModel
+import com.zh.xplan.ui.webview.NativeWebViewActivity
+import com.zh.xplan.ui.webview.X5WebViewActivity
 import kotlinx.android.synthetic.main.fragment_setting.*
 import org.qcode.qskinloader.SkinManager
 import permissions.dispatcher.NeedsPermission
@@ -53,35 +59,34 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 /**
- * 第四个菜单 设置菜单   kotlin
+ * 第四个菜单 设置菜单
  * Created by zh
  */
 @RuntimePermissions
-class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragmentView  {
+class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
     private var mContentView: View? = null
     private var mProgressDialog: ProgressDialog? = null//清理缓存时的对话框
-    private val PHOTO_REQUEST_CAMERA = 1// 拍照
-    private val PHOTO_REQUEST_GALLERY = 2// 从相册中选择
-    private val PHOTO_REQUEST_CUT = 3// 结果
-    /* 头像名称 */
-    private val PHOTO_FILE_NAME = "temp_photo.jpg"
-    private var tempFile: File? = null
     private var bitmap: Bitmap? = null
-    private val HEAD_PATH = XPlanApplication.getInstance().getExternalFilesDir(null)?.absolutePath + "/head.jpg"
+    private var tempFile: File? = null
     private var resultBean: WeatherBeseModel.WeatherBean? = null
     private var presenter: SettingFragmentPresenter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        mContentView = activity?.let { View.inflate(it,R.layout.fragment_setting, null) }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        mContentView = View.inflate(activity, R.layout.fragment_setting, null)
+        initTitle(activity, mContentView)
         return mContentView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initTitle(activity, mContentView)
-        initView()
-        initDatas()
         SkinManager.getInstance().applySkin(view, true)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initView()
+        initData()
     }
 
     /**
@@ -89,9 +94,9 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
      */
     override fun onResume() {
         super.onResume()
-        if (presenter != null) {
-            presenter?.getCityWeather("", "")
-            presenter?.getCacheSize()
+        presenter?.apply {
+            getCityWeather("", "")
+            getCacheSize()
         }
     }
 
@@ -111,21 +116,20 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
      * @param view
      */
     private fun initTitle(activity: Activity?, view: View?) {
-        if(activity == null){
-            return
-        }
         // 1.设置左边的图片按钮显示，以及事件 2.设置中间TextView显示的文字 3.设置右边的图片按钮显示，并设置事件
-        TitleUtil(activity, view).setMiddleTitleText("设置")
+        TitleUtil(activity, view!!).setMiddleTitleText("设置")
     }
 
     /**
      * 初始化界面
      */
     private fun initView() {
-        rl_weather.setOnClickListener(this)
         ll_pay.setOnClickListener(this)
         ll_camera.setOnClickListener(this)
-        ll_kotlin.setOnClickListener(this)
+        ll_flutter.setOnClickListener(this)
+        ll_logistics.setOnClickListener(this)
+        ll_x5_webview.setOnClickListener(this)
+        ll_native_webview.setOnClickListener(this)
         iv_head_picture.setOnClickListener(this)
         ll_share.setOnClickListener(this)
         ll_chack_version.setOnClickListener(this)
@@ -135,27 +139,31 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
         ll_robot.setOnClickListener(this)
         ll_ip_tools.setOnClickListener(this)
         ll_ad_dialog.setOnClickListener(this)
-        val bt = getHead(HEAD_PATH)
-        if (bt != null) {
-            val drawable = BitmapDrawable(bt)
-            iv_head_picture.setImageDrawable(drawable)
-        } else {
-            iv_head_picture.setImageDrawable(activity?.resources?.getDrawable(R.drawable.head_default))
-        }
-        try {
-            val pm = activity!!.packageManager
-            val pi: PackageInfo
-            pi = pm.getPackageInfo(activity!!.packageName, 0)
-            tv_current_version.text = "当前版本:" + pi.versionName
-        } catch (e: Exception) {
-            e.printStackTrace()
+        activity?.let {
+            val bt = getHead(HEAD_PATH)
+            if (bt != null) {
+                val drawable = BitmapDrawable(bt)
+                iv_head_picture.setImageDrawable(drawable)
+            } else {
+                iv_head_picture.setImageDrawable(it.resources.getDrawable(R.drawable.head_default))
+            }
+            try {
+                val pm = it.packageManager
+                val pi: PackageInfo
+                pi = pm.getPackageInfo(it.packageName, 0)
+                tv_current_version.text = "当前版本:" + pi.versionName
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
-    fun initDatas() {
+    private fun initData() {
         presenter = SettingFragmentPresenter()
-        presenter?.attachView(this)
-        presenter?.getCityWeather("", "北京")
+        presenter?.apply {
+            attachView(this@SettingFragment)
+            getCityWeather("", "北京")
+        }
     }
 
     override fun onClick(v: View) {
@@ -193,9 +201,26 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
             R.id.ll_camera ->
                 //拍照、录视频
                 customRecord(true)
-            R.id.ll_kotlin ->
-                //kotlin测试
-                startActivity(Intent(activity, KotlinDemoActivity::class.java))
+            R.id.ll_flutter ->
+                //Flutter版本
+                startActivity(Intent(activity, MyFlutterActivity::class.java))
+            R.id.ll_logistics ->
+                //物流详情
+                startActivity(Intent(activity, LogisticsDetailActivity::class.java))
+            R.id.ll_x5_webview -> {
+                //x5_webview
+                val intent = Intent(activity,
+                        X5WebViewActivity::class.java)
+                intent.putExtra("URL", "https://www.baidu.com")
+                startActivity(intent)
+            }
+            R.id.ll_native_webview -> {
+                //原生webview
+                val nativeWebviewIntent = Intent(activity,
+                        NativeWebViewActivity::class.java)
+                nativeWebviewIntent.putExtra("URL", "https://www.baidu.com")
+                startActivity(nativeWebviewIntent)
+            }
             else -> {
             }
         }
@@ -218,24 +243,25 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
      * 去应用市场评分
      */
     private fun goToMarket() {
-        if (!isMarketInstalled(activity)) {
-            SnackbarUtils.ShortToast(mContentView, "您的手机没有安装应用市场")
-            return
-        }
-        try {
-            //Uri uri = Uri.parse("market://details?id="+getPackageName());
-            val uri = Uri.parse("market://details?id=" + "com.tencent.mobileqq")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            if (intent.resolveActivity(activity?.packageManager) != null) {
-                startActivity(intent)
+        activity?.let { activity ->
+            if (!isMarketInstalled(activity)) {
+                SnackbarUtils.ShortToast(mContentView, "您的手机没有安装应用市场")
+                return
             }
-        } catch (e: Exception) {
-            // 该功能部分手机可能有问题，待验证。详情参见http://blog.csdn.net/wangfayinn/article/details/10351655
-            // 也可以调到某个网页应用市场
-            SnackbarUtils.ShortToast(mContentView, "您的手机没有安装应用市场")
+            try {
+                //Uri uri = Uri.parse("market://details?id="+getPackageName());
+                val uri = Uri.parse("market://details?id=" + "com.tencent.mobileqq")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                if (intent.resolveActivity(activity.packageManager) != null) {
+                    startActivity(intent)
+                }
+            } catch (e: Exception) {
+                // 该功能部分手机可能有问题，待验证。详情参见http://blog.csdn.net/wangfayinn/article/details/10351655
+                // 也可以调到某个网页应用市场
+                SnackbarUtils.ShortToast(mContentView, "您的手机没有安装应用市场")
+            }
         }
-
     }
 
     /**
@@ -243,10 +269,7 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
      * @param context
      * @return
      */
-    private fun isMarketInstalled(context: Context?): Boolean {
-        if(context == null){
-            return false
-        }
+    private fun isMarketInstalled(context: Context): Boolean {
         val intent = Intent()
         intent.data = Uri.parse("market://details?id=android.browser")
         val list = context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
@@ -257,28 +280,29 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
      * 替换头像对话框
      */
     private fun changeHeadPicture() {
-        val view = View.inflate(activity, R.layout.dialog_change_head_picture, null)
-        //要用 android.support.v7.app.AlertDialog 并且设置主题
-        activity?.let {
-            val dialog = android.app.AlertDialog.Builder(it).setTitle("更换头像")
-                .setView(view)
-                .create()
+        activity?.let { activity ->
+            val view = View.inflate(activity, R.layout.dialog_change_head_picture, null)
+            //要用 android.support.v7.app.AlertDialog 并且设置主题
+            val dialog = AlertDialog.Builder(activity)
+                    .setTitle("更换头像")
+                    .setView(view)
+                    .create()
             dialog.show()
-            val params = dialog.window.attributes
-            if (params != null) {
-                params.width = (activity?.windowManager?.defaultDisplay?.width ?:  params.width * 6/5 ) * 5 / 6
-            }
-            //	params.height = 200 ;
-            dialog.window.attributes = params
-            view.findViewById<View>(R.id.ll_from_camera).setOnClickListener {
-                // 从相机截取头像
-//                cameraWithPermissionCheck()
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.ll_from_gallery).setOnClickListener {
-                // 从图库截取头像
-                gallery()
-                dialog.dismiss()
+            dialog.window?.let { window ->
+                val params = window.attributes
+                params.width = activity.windowManager.defaultDisplay.width * 5 / 6
+                //	params.height = 200 ;
+                window.attributes = params
+                view.findViewById<View>(R.id.ll_from_camera).setOnClickListener {
+                    // 从相机截取头像
+                    cameraWithPermissionCheck()
+                    dialog.dismiss()
+                }
+                view.findViewById<View>(R.id.ll_from_gallery).setOnClickListener {
+                    // 从图库截取头像
+                    gallery()
+                    dialog.dismiss()
+                }
             }
         }
     }
@@ -286,31 +310,30 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
     /**
      * 手动检测更新版本
      */
-    fun chackVersion() {
-        //		Beta.checkUpgrade();//检查版本号
-        //要用 android.support.v7.app.AlertDialog 并且设置主题
-        activity?.let {
-            val dialog = android.app.AlertDialog.Builder(it)
-                .setTitle("发现新版本")
-                .setMessage("1.测试下载 \n2.测试下载带进度 \n3.测试下载带进度")
-                .setNegativeButton("取消", null)
-                .setPositiveButton("确定") { arg0, arg1 ->
-                    //					getApk();
-//                    getApkWithPermissionCheck()
-                }
-                .create()
+    private fun chackVersion() {
+        activity?.let { activity ->
+            //		Beta.checkUpgrade();//检查版本号
+            //要用 android.support.v7.app.AlertDialog 并且设置主题
+            val dialog = AlertDialog.Builder(activity)
+                    .setTitle("发现新版本")
+                    .setMessage("1.测试下载 \n2.测试下载带进度 \n3.测试下载带进度")
+                    .setNegativeButton("取消", null)
+                    .setPositiveButton("确定") { arg0, arg1 ->
+                        //					getApk();
+                        getApkWithPermissionCheck()
+                    }
+                    .create()
             dialog.show()
-            val params = dialog.window.attributes
-            if (params != null) {
-                params.width = (activity?.windowManager?.defaultDisplay?.width ?:  params.width * 6/5 ) * 5 / 6
+            dialog.window?.let { window ->
+                val params = window.attributes
+                params.width = activity.windowManager.defaultDisplay.width * 5 / 6
+                window.attributes = params
             }
-            //	params.height = 200 ;
-            dialog.window.attributes = params
         }
     }
 
     @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-    fun getApk() {
+    internal fun getApk() {
         //		View view = LayoutInflater.from(getActivity()).inflate(R.layout.update_app_progress,null);
         val view = View.inflate(activity,
                 R.layout.update_app_progress, null)
@@ -321,85 +344,88 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
         progressBar.progress = 0
         tv_Progress.text = "0%"
         title.text = "正在下载"
-        activity?.let {
-            val dialog = android.app.AlertDialog.Builder(it)
+        val dialog = AlertDialog.Builder(activity!!)
                 .setView(view)
                 .setNegativeButton("取消", null)
                 .setPositiveButton("重试") { arg0, arg1 -> }
                 .create()
-            dialog.show()
-            dialog.setCanceledOnTouchOutside(false)
-            val params = dialog.window.attributes
-            if (params != null) {
-                params.width = (activity?.windowManager?.defaultDisplay?.width ?:  params.width * 6/5 ) * 5 / 6
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(false)
+        val params = dialog.window!!.attributes
+        params.width = activity!!.windowManager.defaultDisplay.width * 5 / 6
+        //	params.height = 200 ;
+        dialog.window!!.attributes = params
+        val negativeButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+        val positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+        negativeButton.visibility = View.GONE
+        positiveButton.visibility = View.GONE
+        LogUtil.e("zh", "getApk , ")
+        //		String url = "https://raw.githubusercontent.com/JustRight815/XPlan/master/apk/app-debug.apk";
+        //		String url = "http://cn.bing.com/az/hprichbg/rb/TartumaaEstonia_ZH-CN13968964399_720x1280.jpg";
+        val url = "http://app.2345.cn/appsoft/80202.apk"
+        val callback = object : IDownLoadCallback() {
+
+            override fun onStart(totalBytes: Long) {
+                super.onStart(totalBytes)
+                LogUtil.e("zh", "onStart , $totalBytes")
             }
-            //	params.height = 200 ;
-            dialog.window.attributes = params
-            val negativeButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
-            val positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-            negativeButton.visibility = View.GONE
-            positiveButton.visibility = View.GONE
-            LogUtil.e("zh", "getApk , ")
-            //		String url = "https://raw.githubusercontent.com/JustRight815/XPlan/master/apk/app-debug.apk";
-            //		String url = "http://cn.bing.com/az/hprichbg/rb/TartumaaEstonia_ZH-CN13968964399_720x1280.jpg";
-            val url = "http://app.2345.cn/appsoft/80202.apk"
-            val callback = object : IDownLoadCallback() {
 
-                override fun onStart(totalBytes: Long) {
-                    super.onStart(totalBytes)
-                    LogUtil.e("zh", "onStart , $totalBytes")
-                }
-
-                override fun onCancel() {
-                    super.onCancel()
-                    LogUtil.e("zh", "onCancel , ")
-                    title.text = "已取消下载"
-                }
-
-                override fun onFinish(downloadFile: File) {
-                    LogUtil.e("zh", "onFinish , " + downloadFile.path)
-                    title.text = "下载成功"
-                    progressBar.progress = 100
-                    tv_Progress.text = 100.toString() + "%"
-                    autoInstallApk(downloadFile)
-                    dialog.dismiss()
-                }
-
-                override fun onProgress(currentBytes: Long, totalBytes: Long) {
-                    LogUtil.e("zh", "doDownload onProgress:$currentBytes/$totalBytes")
-                    var currentProgress = (currentBytes.toFloat() / totalBytes * 100).toInt()
-                    LogUtil.e("zh", "doDownload currentProgress:$currentProgress")
-                    if (currentProgress > 100) {
-                        currentProgress = 100
-                    }
-                    title.text = "正在下载"
-                    progressBar.progress = currentProgress
-                    tv_Progress.text = currentProgress.toString() + "%"
-                }
-
-                override fun onFailure(error_msg: String) {
-                    LogUtil.e("zh", "onFailure , $error_msg")
-                    title.text = "下载失败！"
-                    negativeButton?.visibility = View.VISIBLE
-                    //						positiveButton.setVisibility(View.VISIBLE);
-                }
+            override fun onCancel() {
+                super.onCancel()
+                LogUtil.e("zh", "onCancel , ")
+                title.text = "已取消下载"
             }
-            val disposableObserver = NetManager.download(url, null,
-                    Environment.getExternalStorageDirectory().path + "/xplan/", null,
-                    getDefaultDownLoadFileName(url),
-                    callback
-            )
-            negativeButton?.setOnClickListener {
-                LogUtil.e("zh", "setOnClickListener setOnClickListener , ")
-                if (dialog != null && dialog.isShowing) {
-                    dialog.dismiss()
+
+            override fun onFinish(downloadFile: File) {
+                LogUtil.e("zh", "onFinish , " + downloadFile.path)
+                title.text = "下载成功"
+                progressBar.progress = 100
+                tv_Progress.text = 100.toString() + "%"
+                autoInstallApk(downloadFile)
+                dialog.dismiss()
+            }
+
+            override fun onProgress(currentBytes: Long, totalBytes: Long) {
+                LogUtil.e("zh", "doDownload onProgress:$currentBytes/$totalBytes")
+                var currentProgress = (currentBytes.toFloat() / totalBytes * 100).toInt()
+                LogUtil.e("zh", "doDownload currentProgress:$currentProgress")
+                if (currentProgress > 100) {
+                    currentProgress = 100
                 }
-                if (disposableObserver != null) {
-                    LogUtil.e("zh", "disposableObserver dispose , ")
-                    disposableObserver.dispose()
-                }
+                title.text = "正在下载"
+                progressBar.progress = currentProgress
+                tv_Progress.text = "$currentProgress%"
+            }
+
+            override fun onFailure(error_msg: String) {
+                LogUtil.e("zh", "onFailure , $error_msg")
+                title.text = "下载失败！"
+                negativeButton.visibility = View.VISIBLE
+                //						positiveButton.setVisibility(View.VISIBLE);
             }
         }
+        val disposableObserver = NetManager.download(url, null,
+                Environment.getExternalStorageDirectory().path + "/xplan/", null,
+                getDefaultDownLoadFileName(url),
+                callback
+        )
+        negativeButton.setOnClickListener {
+            LogUtil.e("zh", "setOnClickListener setOnClickListener , ")
+            if (dialog != null && dialog.isShowing) {
+                dialog.dismiss()
+            }
+            if (disposableObserver != null) {
+                LogUtil.e("zh", "disposableObserver dispose , ")
+                disposableObserver.dispose()
+            }
+        }
+
+        //		//下载新的图片
+        //		HttpManager.download()
+        //				.url(url)
+        //				.dir(Environment.getExternalStorageDirectory().getPath() + "/xplan/")
+        //				.name(getDefaultDownLoadFileName(url))
+        //				.enqueue(callback);
     }
 
 
@@ -416,19 +442,9 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
         }
     }
 
-    /**
-     * 从url中，获得默认文件名
-     */
-    private fun getDefaultDownLoadFileName(url: String?): String {
-        if (url == null || url.length == 0) return ""
-        val nameStart = url.lastIndexOf('/') + 1
-        return url.substring(nameStart)
-    }
-
     @OnNeverAskAgain(Manifest.permission.READ_EXTERNAL_STORAGE)
-    fun onNeverAskAgain() {
-        activity?.let {
-            android.app.AlertDialog.Builder(it)
+    internal fun onNeverAskAgain() {
+        AlertDialog.Builder(activity!!)
                 .setPositiveButton("好的") { dialog, which ->
                     //打开系统设置权限
                     val intent = getAppDetailSettingIntent(activity)
@@ -439,11 +455,10 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
                 .setCancelable(false)
                 .setMessage("您已经禁止了存储权限,是否去开启权限")
                 .show()
-        }
     }
 
     @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
-    fun onPermissionDenied() {
+    internal fun onPermissionDenied() {
         SnackbarUtils.ShortToast(mContentView, "拒绝存储权限将无法升级")
     }
 
@@ -451,25 +466,25 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
     /**
      * share SDk 分享
      */
-    fun share() {
+    private fun share() {
         ShareSDKManager.show(activity)
     }
 
     /**
      * 清除历史记录
      */
-    fun clearHistory() {
-        if (presenter != null) {
+    private fun clearHistory() {
+        presenter?.let {
             mProgressDialog = ProgressDialog.show(activity, null, "清除记录中...",
                     true, false)
-            presenter?.clearCache()
+            it.clearCache()
         }
     }
 
     /*
 	 * 从相册获取
 	 */
-    fun gallery() {
+    private fun gallery() {
         // 激活系统图库，选择一张图片
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -492,19 +507,18 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
     }
 
     @OnPermissionDenied(Manifest.permission.CAMERA)
-    fun showRecordDenied() {
+    internal fun showRecordDenied() {
         SnackbarUtils.ShortToast(mContentView, "拒绝相机权限将无法从相机获取头像")
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        onRequestPermissionsResult( requestCode, grantResults)
+        onRequestPermissionsResult(requestCode, grantResults)
     }
 
     @OnNeverAskAgain(Manifest.permission.CAMERA)
-    fun onRecordNeverAskAgain() {
-        activity?.let {
-            android.app.AlertDialog.Builder(it)
+    internal fun onRecordNeverAskAgain() {
+        AlertDialog.Builder(activity!!)
                 .setPositiveButton("好的") { dialog, which ->
                     //打开系统设置权限
                     val intent = getAppDetailSettingIntent(activity)
@@ -515,7 +529,6 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
                 .setCancelable(false)
                 .setMessage("您已经禁止了相机权限,是否去开启权限")
                 .show()
-        }
     }
 
     /**
@@ -523,19 +536,16 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
      *
      * @return
      */
-    fun getAppDetailSettingIntent(context: Context?): Intent {
+    private fun getAppDetailSettingIntent(context: Context?): Intent {
         val localIntent = Intent()
-        if(context == null){
-            return localIntent
-        }
         localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         if (Build.VERSION.SDK_INT >= 9) {
             localIntent.action = "android.settings.APPLICATION_DETAILS_SETTINGS"
-            localIntent.data = Uri.fromParts("package", context.packageName, null)
+            localIntent.data = Uri.fromParts("package", context!!.packageName, null)
         } else if (Build.VERSION.SDK_INT <= 8) {
             localIntent.action = Intent.ACTION_VIEW
             localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails")
-            localIntent.putExtra("com.android.settings.ApplicationPkgName", context.packageName)
+            localIntent.putExtra("com.android.settings.ApplicationPkgName", context!!.packageName)
         }
         return localIntent
     }
@@ -560,18 +570,18 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
             }
         } else if (requestCode == PHOTO_REQUEST_CUT) {
             try {
-                bitmap = data!!.getParcelableExtra<Bitmap>("data")
+                bitmap = data!!.getParcelableExtra("data")
                 if (bitmap != null) {
                     /**
                      * 上传服务器代码
                      */
-                    setPicToView(bitmap)// 保存在SD卡中
+                    setPicToView(bitmap!!)// 保存在SD卡中
                     iv_head_picture.setImageBitmap(bitmap)// 用ImageView显示出来
                     //					if (bitmap != null && !bitmap.isRecycled()) {
                     //						bitmap.recycle();
                     //					}
                 }
-                val delete = tempFile?.delete()
+                val delete = tempFile!!.delete()
                 println("delete = $delete")
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -582,10 +592,7 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun setPicToView(mBitmap: Bitmap?) {
-        if(mBitmap == null){
-            return
-        }
+    private fun setPicToView(mBitmap: Bitmap) {
         val sdStatus = Environment.getExternalStorageState()
         if (sdStatus != Environment.MEDIA_MOUNTED) { // 检测sd是否可用
             return
@@ -600,8 +607,8 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
         } finally {
             try {
                 // 关闭流
-                b?.flush()
-                b?.close()
+                b!!.flush()
+                b.close()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -663,30 +670,24 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
         (view.findViewById<View>(R.id.text1) as TextView).text = "微信支付"
         (view.findViewById<View>(R.id.text2) as TextView).text = "支付宝支付"
         //要用 android.support.v7.app.AlertDialog 并且设置主题
-        activity?.let {
-            val dialog = android.app.AlertDialog.Builder(it)
+        val dialog = AlertDialog.Builder(activity!!)
                 .setTitle("支付方式")
                 .setView(view)
                 .create()
-            dialog.show()
-            val params = dialog.window.attributes
-            if (params != null) {
-                params.width = (activity?.windowManager?.defaultDisplay?.width ?:  params.width * 6/5 ) * 5 / 6
-            }
-            //	params.height = 200 ;
-            if (dialog != null) {
-                dialog.window.attributes = params
-            }
-            view.findViewById<View>(R.id.ll_from_camera).setOnClickListener {
-                SnackbarUtils.ShortToast(ll_chack_version, "应用需要审核才能使用")
-                //				doWXPay("");
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.ll_from_gallery).setOnClickListener {
-                SnackbarUtils.ShortToast(ll_chack_version, "应用需要审核才能使用")
-                //				doAlipay("");
-                dialog.dismiss()
-            }
+        dialog.show()
+        val params = dialog.window!!.attributes
+        params.width = activity!!.windowManager.defaultDisplay.width * 5 / 6
+        //	params.height = 200 ;
+        dialog.window!!.attributes = params
+        view.findViewById<View>(R.id.ll_from_camera).setOnClickListener {
+            SnackbarUtils.ShortToast(mContentView, "应用需要审核才能使用")
+            //				doWXPay("");
+            dialog.dismiss()
+        }
+        view.findViewById<View>(R.id.ll_from_gallery).setOnClickListener {
+            SnackbarUtils.ShortToast(mContentView, "应用需要审核才能使用")
+            //				doAlipay("");
+            dialog.dismiss()
         }
     }
 
@@ -782,19 +783,21 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
     override fun updateCityWeather(weatherBean: WeatherBeseModel.WeatherBean, temperature: String, pm: String, resid: Int, airCondition: String, cityName: String, weather: String, weatherRes: Int) {
         resultBean = weatherBean
         if (resultBean != null) {
-            header_tv_temperature.setText(temperature)
-            tv_pm.setText(pm)
+            header_tv_temperature.text = temperature
+            tv_pm.text = pm
             tv_pm.setBackgroundResource(resid)
-            tv_pm_str.setText(airCondition)
-            tv_city.setText(cityName)
-            tv_weathr.setText(weather)
+            tv_pm_str.text = airCondition
+            tv_city.text = cityName
+            tv_weathr.text = weather
             header_iv_weather.setImageDrawable(resources.getDrawable(weatherRes))
         }
     }
 
     override fun updateCacheSize(cacheSize: String) {
-        if (mProgressDialog != null && mProgressDialog?.isShowing == true) {
-            mProgressDialog?.dismiss()
+        mProgressDialog?.let {
+            if(it.isShowing){
+                it.dismiss()
+            }
         }
         tv_cache.text = cacheSize
     }
@@ -822,5 +825,23 @@ class SettingFragmentKotlin : BaseFragment(), View.OnClickListener,SettingFragme
         mProgressDialog?.dismiss()
         presenter?.onDestory()
         super.onDestroy()
+    }
+
+    companion object {
+        private val PHOTO_REQUEST_CAMERA = 1// 拍照
+        private val PHOTO_REQUEST_GALLERY = 2// 从相册中选择
+        private val PHOTO_REQUEST_CUT = 3// 结果
+        /* 头像名称 */
+        private val PHOTO_FILE_NAME = "temp_photo.jpg"
+        private val HEAD_PATH = XPlanApplication.getInstance().getExternalFilesDir(null)!!.absolutePath + "/head.jpg"
+
+        /**
+         * 从url中，获得默认文件名
+         */
+        fun getDefaultDownLoadFileName(url: String?): String {
+            if (url == null || url.length == 0) return ""
+            val nameStart = url.lastIndexOf('/') + 1
+            return url.substring(nameStart)
+        }
     }
 }

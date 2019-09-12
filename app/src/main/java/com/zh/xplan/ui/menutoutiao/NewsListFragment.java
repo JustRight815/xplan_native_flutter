@@ -37,7 +37,7 @@ import com.zh.xplan.ui.playeractivity.PlayerDetailActivity;
 import com.zh.xplan.ui.view.pulltorefresh.PtrFrameLayout;
 import com.zh.xplan.ui.view.pulltorefresh.PtrHandler;
 import com.zh.xplan.ui.view.pulltorefresh.customheader.PullToRefreshLayout;
-import com.zh.xplan.ui.webviewActivity.WeatherDetailsActivity;
+import com.zh.xplan.ui.webview.X5WebViewActivity;
 
 import org.qcode.qskinloader.SkinManager;
 
@@ -231,7 +231,7 @@ public class NewsListFragment extends BaseFragment implements BaseQuickAdapter.R
                     //非视频新闻
                     if (news.article_type == 1) {
                         //如果article_type为1，则是使用WebViewActivity打开   纯网页文章，直接加载webview
-                        intent = new Intent(getActivity(), WeatherDetailsActivity.class);
+                        intent = new Intent(getActivity(), X5WebViewActivity.class);
                         intent.putExtra("URL", news.article_url);
                         startActivity(intent);
                         return;

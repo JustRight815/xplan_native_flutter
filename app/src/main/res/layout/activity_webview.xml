@@ -55,17 +55,6 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/title_bar_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:visibility="visible" />
     </RelativeLayout>
 
     <RelativeLayout

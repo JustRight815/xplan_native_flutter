@@ -18,18 +18,18 @@ import java.util.*
 /**
  * 广告界面
  */
-class AdActivity : BaseActivity(), View.OnClickListener {
+class AdActivity : BaseActivity() {
     private var isShowTimer = false
     private var isJumpFinish = false
     private val SPLASH_FILE_NAME = "splash"
 
     private val countDownTimer = object : CountDownTimer(1200, 1000) {
         override fun onTick(millisUntilFinished: Long) {
-            btn_jump?.text = "跳过(" + millisUntilFinished / 1000 + "s)"
+            btn_jump.text = "跳过(" + millisUntilFinished / 1000 + "s)"
         }
 
         override fun onFinish() {
-            btn_jump?.text = "跳过(" + 0 + "s)"
+            btn_jump.text = "跳过(" + 0 + "s)"
             gotoMainActivity()
         }
     }
@@ -44,24 +44,15 @@ class AdActivity : BaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSwipeBackEnable(false)
+        swipeBackEnable = false
         setContentView(R.layout.activity_splash)
         StatusBarUtil.setTranslucentForImageView(this, 0, null)//状态栏透明
-        btn_jump?.setOnClickListener(this)
+        btn_jump.setOnClickListener{
+            gotoMainActivity()
+        }
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         tvCopyright?.text = "Copyright © 2016--$year XPlan"
-    }
-
-    override fun onClick(view: View) {
-        when (view.id) {
-        //            case R.id.sp_bg:
-        //                gotoWebActivity();
-        //                break;
-            R.id.btn_jump -> gotoMainActivity()
-            else -> {
-            }
-        }
     }
 
     override fun onResume() {
@@ -81,7 +72,7 @@ class AdActivity : BaseActivity(), View.OnClickListener {
                 LogUtil.e("zh", "FileUtils.bitmap ")
                 ivSplash?.setImageBitmap(bitmap)
                 countDownTimer.start()
-                btn_jump?.visibility = View.VISIBLE
+                btn_jump.visibility = View.VISIBLE
                 return
             }
         } else {

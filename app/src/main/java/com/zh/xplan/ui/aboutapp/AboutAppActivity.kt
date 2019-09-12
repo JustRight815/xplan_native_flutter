@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
-import android.view.View
 import com.google.zxing.WriterException
 import com.module.common.utils.PixelUtil
 import com.zh.xplan.R
@@ -20,7 +19,7 @@ import java.io.UnsupportedEncodingException
 /**
  * 关于软件界面  生成二维码实例
  */
-class AboutAppActivity : BaseActivity(), View.OnClickListener {
+class AboutAppActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +33,9 @@ class AboutAppActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initTitle() {
-        findViewById<View>(R.id.title_bar_back).setOnClickListener(this)
+        title_bar_back.setOnClickListener {
+            finish()
+        }
         setStatusBarColor(resources.getColor(R.color.colorPrimaryDark), 0)
     }
 
@@ -46,18 +47,9 @@ class AboutAppActivity : BaseActivity(), View.OnClickListener {
         textSpan.setSpan(RelativeSizeSpan(1.8f), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         textSpan.setSpan(RelativeSizeSpan(1f), 1, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         tv_desc.text = textSpan
-        tv_version_name.text = "当前版本号:$versionName"
+        tv_version_name.text = "当前版本号:" + getVersionName()
         createQrCode("X Plan  一个随意的demo", 170f)
     }
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.title_bar_back -> finish()
-            else -> {
-            }
-        }
-    }
-
 
     /**
      * 生成二维码
@@ -67,7 +59,7 @@ class AboutAppActivity : BaseActivity(), View.OnClickListener {
         var qrCode: Bitmap? = null
         try {
             qrCode = EncodingHandler.create2Code(key, PixelUtil.dp2px(size, this))
-            iv_qr_code!!.setImageBitmap(qrCode)
+            iv_qr_code.setImageBitmap(qrCode)
         } catch (e: WriterException) {
             e.printStackTrace()
         } catch (e: UnsupportedEncodingException) {
@@ -77,30 +69,16 @@ class AboutAppActivity : BaseActivity(), View.OnClickListener {
         return qrCode
     }
 
-    companion object {
-
-        //获取版本名
-        val versionName: String
-            get() = packageInfo!!.versionName
-
-        //获取版本号
-        val versionCode: Int
-            get() = packageInfo!!.versionCode
-
-        private val packageInfo: PackageInfo?
-            get() {
-                var pi: PackageInfo? = null
-                try {
-                    val pm = XPlanApplication.getInstance().getPackageManager()
-                    pi = pm.getPackageInfo(XPlanApplication.getInstance().packageName,
-                            PackageManager.GET_CONFIGURATIONS)
-                    return pi
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-                return pi
-            }
+    private fun getVersionName(): String {
+        var versionName = ""
+        try {
+            val pm = XPlanApplication.getInstance().packageManager
+            val packageInfo: PackageInfo? = pm.getPackageInfo(XPlanApplication.getInstance().packageName,
+                    PackageManager.GET_CONFIGURATIONS)
+            versionName = packageInfo?.versionName?:""
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return versionName
     }
-
 }

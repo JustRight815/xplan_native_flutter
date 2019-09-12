@@ -34,7 +34,6 @@ dependencies {
     api('com.github.bumptech.glide:glide:4.7.1') {
         exclude group: "com.android.support"
     }
-//    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //事件总线
     api 'org.greenrobot:eventbus:3.0.0'
     //BRVAH是一个强大的RecyclerAdapter框架

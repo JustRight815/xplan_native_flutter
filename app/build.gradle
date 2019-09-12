@@ -123,8 +123,6 @@ dependencies {
     implementation 'org.litepal.android:core:1.5.0'
     //Facebook Spring动画库
     implementation 'com.facebook.rebound:rebound:0.3.8'
-    implementation "me.leolin:ShortcutBadger:1.1.21@aar"
-
 }
 
 andResGuard {

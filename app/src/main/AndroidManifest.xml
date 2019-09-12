@@ -163,7 +163,7 @@
             android:exported="false"
             android:theme="@style/AppTheme.Transparent" />
         <activity
-            android:name="com.zh.xplan.ui.webviewActivity.WebviewActivity"
+            android:name="com.zh.xplan.ui.webview.NativeWebViewActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:exported="false"
@@ -200,7 +200,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan"/>
 
         <activity
-            android:name="com.zh.xplan.ui.webviewActivity.WeatherDetailsActivity"
+            android:name="com.zh.xplan.ui.webview.X5WebViewActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:exported="false"

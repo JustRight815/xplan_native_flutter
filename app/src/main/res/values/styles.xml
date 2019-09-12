@@ -1,20 +1,13 @@
-<resources>
-
-    <style name="AppStartFullscreen" parent="android:style/Theme.Translucent.NoTitleBar.Fullscreen">
-        <!--启动页 这种方式的效果类似于QQ，UC,支付宝，启动页直接消失，没有左进右出的效果-->
-        <!--冷启动时间 480- 600MS 但是点击图标有延迟卡顿效果-->
-        <!--<item name="android:windowIsTranslucent">true</item>-->
-        <item name="android:windowNoTitle">true</item>
-        <!--<item name="android:windowFullscreen">true</item>-->
-        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
-        <!--<item name="android:windowBackground">@drawable/index1</item>-->
-    </style>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     //继承baseActivity类必须使用AppCompat主题
     <style name="AppStartTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--冷启动时间更慢 650-1100 MS 但是点击图标是立即打开视觉效果-->
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@drawable/app_index</item>
+        <!--<item name="android:statusBarColor" tools:targetApi="lollipop">@color/white</item>-->
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="p">shortEdges</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">false</item>
     </style>
 
     <!-- Base application theme. -->
@@ -38,7 +31,7 @@
         <!-- MD风格主题 theme  -->
         <!--状态栏颜色 -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <!--标题栏颜色 -->
+        <!--标题栏颜色 -->S
         <item name="colorPrimary">@color/colorPrimary</item>
         <!--主题控件颜色  进度条、edittext指针颜色等 -->
         <item name="colorAccent">@color/colorAccent</item>

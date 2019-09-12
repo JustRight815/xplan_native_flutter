@@ -3,7 +3,7 @@ ext {
             compileSdkVersion   : 28,
             applicationId       : 'com.zh.xplan',
             minSdkVersion       : 19,
-            targetSdkVersion    : 23,
+            targetSdkVersion    : 28,
             versionCode         : 102,
             versionName         : '1.0.2',
     ]
