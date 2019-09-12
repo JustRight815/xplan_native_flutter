@@ -1,20 +1,18 @@
 package com.zh.xplan.ui.webview
 
 import android.annotation.SuppressLint
-import android.net.http.SslError
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.*
+import android.webkit.WebChromeClient
+import android.webkit.WebView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.module.common.log.LogUtil
 import com.module.common.utils.PixelUtil
 import com.zh.xplan.R
-import com.zh.xplan.XPlanApplication
 import com.zh.xplan.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_webview.*
 
@@ -44,12 +42,11 @@ class NativeWebViewActivity : BaseActivity() {
         ProgressBar.layoutParams = RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT, PixelUtil.dp2px(2f, this))
         //防止内存泄露
-        val webViewLayout = findViewById<View>(R.id.ll_webview_layout) as LinearLayout
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        mWebView = WebView(applicationContext)
+        mWebView = PreloadWebView.instance.getWebView(this)
         mWebView?.let {
             it.layoutParams = params
-            webViewLayout.addView(it)
+            ll_webview_layout.addView(it)
             initWebView(it)
         }
     }
@@ -70,37 +67,6 @@ class NativeWebViewActivity : BaseActivity() {
 
     @SuppressLint("SetJavaScriptEnabled", "ObsoleteSdkInt")
     private fun initWebView(webView: WebView) {
-        //远程代码执行漏洞
-        webView.removeJavascriptInterface("accessibility")
-        webView.removeJavascriptInterface("searchBoxJavaBridge_")
-        webView.removeJavascriptInterface("accessibilityTraversal")
-        val webSettings = webView.settings
-        //域控制不严格漏洞 禁用 file 协议；
-        webSettings.allowFileAccess = false
-        webSettings.allowFileAccessFromFileURLs = false
-        webSettings.allowUniversalAccessFromFileURLs = false
-        //JS交互
-        webSettings.javaScriptEnabled = true
-        //dom
-        webSettings.domStorageEnabled = true
-        //自适应
-        webSettings.useWideViewPort = true
-        webSettings.loadWithOverviewMode = true
-        //允许加载图片
-        webSettings.blockNetworkImage = false
-        webSettings.javaScriptCanOpenWindowsAutomatically = true
-        webSettings.loadsImagesAutomatically = true
-        //缓存
-        val appCachePath = XPlanApplication.getInstance().cacheDir
-                .absolutePath
-        webSettings.setAppCachePath(appCachePath)
-        webSettings.allowFileAccess = true
-        webSettings.setAppCacheEnabled(true)
-        webSettings.cacheMode = WebSettings.LOAD_DEFAULT
-        //允许http和https混合
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-        }
         webView.webChromeClient = object : WebChromeClient() {
             // 监听网页进度
             override fun onProgressChanged(view: WebView, newProgress: Int) {
@@ -127,20 +93,6 @@ class NativeWebViewActivity : BaseActivity() {
                 //获取到网页标题
                 mTitle = title
                 title_name.text = mTitle
-            }
-        }
-
-        // WebView默认使用系统默认浏览器打开网页的行为，覆盖这个方法使网页用自己的WebView打开
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                // 返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
-                view.loadUrl(url)
-                return true
-            }
-
-            override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
-                //忽略证书校验
-                handler.proceed()
             }
         }
     }
@@ -172,6 +124,7 @@ class NativeWebViewActivity : BaseActivity() {
             it.destroy()
             mWebView = null
         }
+        PreloadWebView.instance.preload()
         super.onDestroy()
     }
 }

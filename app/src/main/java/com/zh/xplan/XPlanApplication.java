@@ -19,6 +19,8 @@ import com.zh.swipeback.SlideFinishManager;
 import com.zh.xplan.ui.menupicture.utils.ScreenUtil;
 import com.zh.xplan.ui.skin.Settings;
 import com.zh.xplan.ui.skin.SkinChangeHelper;
+import com.zh.xplan.ui.webview.PreloadWebView;
+
 import org.litepal.LitePal;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -62,6 +64,7 @@ public class XPlanApplication extends Application {
             initX5QbSdk();
             Glide.get(this);
             ScreenUtil.init(this);
+            PreloadWebView.Companion.getInstance().preload();
         }
     }
 
