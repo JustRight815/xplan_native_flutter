@@ -66,7 +66,7 @@ public class PictureFragmentPresenter extends BasePresenter<PictureFragmentView>
                         List<HomeIndex.ItemInfoListBean> itemInfoList = new ArrayList();
                         List<GridPictureModel> pictureModeList = new ArrayList<>();
                         try {
-                            InputStream is = BaseLib.getContext().getAssets().open("homeindex.txt");
+                            InputStream is = BaseLib.getInstance().getContext().getAssets().open("homeindex.txt");
                             String text = readTextFromFile(is);
                             Gson gson = new Gson();
                             HomeIndex homeIndex = gson.fromJson(text, HomeIndex.class);

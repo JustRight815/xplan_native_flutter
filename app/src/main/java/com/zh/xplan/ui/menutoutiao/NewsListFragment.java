@@ -21,8 +21,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.module.common.log.LogUtil;
 import com.module.common.net.rx.NetManager;
+import com.module.common.utils.MMKVUtil;
 import com.module.common.utils.NetworkUtils;
-import com.module.common.utils.SpUtil;
 import com.module.common.view.snackbar.SnackbarUtils;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.zh.xplan.R;
@@ -239,11 +239,11 @@ public class NewsListFragment extends BaseFragment implements BaseQuickAdapter.R
                     //其他新闻  非纯网页文章，需要加载标题 图片等信息
                     intent = new Intent(getActivity(), NewsDetailsActivity.class);
                 }
-                intent.putExtra(NewsDetailsActivity.CHANNEL_CODE, mChannelCode);
-                intent.putExtra(NewsDetailsActivity.POSITION, position);
-                intent.putExtra(NewsDetailsActivity.DETAIL_URL, url);
-                intent.putExtra(NewsDetailsActivity.GROUP_ID, news.group_id);
-                intent.putExtra(NewsDetailsActivity.ITEM_ID, itemId);
+                intent.putExtra(NewsDetailsActivity.Companion.getCHANNEL_CODE(), mChannelCode);
+                intent.putExtra(NewsDetailsActivity.Companion.getPOSITION(), position);
+                intent.putExtra(NewsDetailsActivity.Companion.getDETAIL_URL(), url);
+                intent.putExtra(NewsDetailsActivity.Companion.getGROUP_ID(), news.group_id);
+                intent.putExtra(NewsDetailsActivity.Companion.getITEM_ID(), itemId);
                 startActivity(intent);
             }
         });
@@ -308,7 +308,7 @@ public class NewsListFragment extends BaseFragment implements BaseQuickAdapter.R
 
     long lastTime;
     private void updateData(final Boolean isPullDownRefresh) {
-        lastTime = SpUtil.getFromLocal(getActivity(),"news",mChannelCode,0);//读取对应频道下最后一次刷新的时间戳
+        lastTime = MMKVUtil.INSTANCE.getLong(mChannelCode,0);
         if (lastTime == 0){
             //如果为空，则是从来没有刷新过，使用当前时间戳
             lastTime = System.currentTimeMillis() / 1000;

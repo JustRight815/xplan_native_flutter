@@ -89,7 +89,7 @@ public class ImageLoader {
      */
     public static long getAllCacheSize() {
         try {
-            Long InternalCacheSize = getFolderSize(new File(BaseLib.getContext().getCacheDir()
+            Long InternalCacheSize = getFolderSize(new File(BaseLib.getInstance().getContext().getCacheDir()
                     + "/"+ InternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR));
             return InternalCacheSize;
         } catch (Exception e) {
@@ -105,7 +105,7 @@ public class ImageLoader {
         try {
             //清理内存必须在主线程
 //            Glide.get(BaseLib.getContext()).clearMemory();
-            Glide.get(BaseLib.getContext()).clearDiskCache();
+            Glide.get(BaseLib.getInstance().getContext()).clearDiskCache();
         }catch (Exception e){
             e.printStackTrace();
         }

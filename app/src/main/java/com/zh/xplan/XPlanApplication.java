@@ -51,10 +51,9 @@ public class XPlanApplication extends Application {
 
     public void delayInit() {
         if(isMainProcess()){
-//            initLeakCanary();
             CrashUtils.init();
             CrashReport.initCrashReport(getApplicationContext(), "0785b70a94", AppConstants.isDebug);
-            BaseLib.init(this, AppConstants.isDebug)
+            BaseLib.getInstance().init(this, AppConstants.isDebug)
                     .setBaseUrl(AppConstants.HTTP_HOST)
                     .initImageManager(this);
             initSkinLoader();

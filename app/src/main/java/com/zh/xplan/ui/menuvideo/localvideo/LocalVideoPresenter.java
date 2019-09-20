@@ -38,7 +38,7 @@ public class LocalVideoPresenter extends BasePresenter<LocalVideoView> {
 
             @Override
             public void subscribe(@NonNull ObservableEmitter<List<LocalVideoBean>> e) throws Exception {
-                ContentResolver contentResolver = BaseLib.getContext().getContentResolver();
+                ContentResolver contentResolver = BaseLib.getInstance().getContext().getContentResolver();
                 Uri uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
                 String[] projections = new String[]{
                         MediaStore.Video.Media.TITLE,

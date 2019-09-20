@@ -21,7 +21,7 @@ public class DPIUtil {
 	}
 	public static Display getDefaultDisplay() {
 		if (null == defaultDisplay) {
-			WindowManager systemService = (WindowManager) BaseLib.getContext().getSystemService(Context.WINDOW_SERVICE);
+			WindowManager systemService = (WindowManager) BaseLib.getInstance().getContext().getSystemService(Context.WINDOW_SERVICE);
 			defaultDisplay = systemService.getDefaultDisplay();
 		}
 		return defaultDisplay;

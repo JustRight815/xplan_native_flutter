@@ -35,29 +35,29 @@ public class PayManager {
      */
     private void doWXPay(String pay_param) {
         String wx_appid = "wxXXXXXXX";     //替换为自己的appid
-        WXPay.init(BaseLib.getContext(), wx_appid);      //要在支付前调用
+        WXPay.init(BaseLib.getInstance().getContext(), wx_appid);      //要在支付前调用
         WXPay.getInstance().doPay(pay_param, new WXPay.WXPayResultCallBack() {
             @Override
             public void onSuccess() {
-                Toast.makeText(BaseLib.getContext(), "支付成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseLib.getInstance().getContext(), "支付成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText(BaseLib.getContext(), "支付取消", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseLib.getInstance().getContext(), "支付取消", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(int error_code) {
                 switch (error_code) {
                     case WXPay.NO_OR_LOW_WX:
-                        Toast.makeText(BaseLib.getContext(), "未安装微信或微信版本过低", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseLib.getInstance().getContext(), "未安装微信或微信版本过低", Toast.LENGTH_SHORT).show();
                         break;
                     case WXPay.ERROR_PAY_PARAM:
-                        Toast.makeText(BaseLib.getContext(), "参数错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseLib.getInstance().getContext(), "参数错误", Toast.LENGTH_SHORT).show();
                         break;
                     case WXPay.ERROR_PAY:
-                        Toast.makeText(BaseLib.getContext(), "支付失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseLib.getInstance().getContext(), "支付失败", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;
@@ -71,36 +71,36 @@ public class PayManager {
      * @param pay_param 支付服务生成的支付参数
      */
     private void doAlipay(String pay_param) {
-        new Alipay(BaseLib.getContext(), pay_param, new Alipay.AlipayResultCallBack() {
+        new Alipay(BaseLib.getInstance().getContext(), pay_param, new Alipay.AlipayResultCallBack() {
             @Override
             public void onSuccess() {
-                Toast.makeText(BaseLib.getContext(), "支付成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseLib.getInstance().getContext(), "支付成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onDealing() {
-                Toast.makeText(BaseLib.getContext(), "支付处理中...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseLib.getInstance().getContext(), "支付处理中...", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText(BaseLib.getContext(), "支付取消", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseLib.getInstance().getContext(), "支付取消", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(int error_code) {
                 switch (error_code) {
                     case Alipay.ERROR_RESULT:
-                        Toast.makeText(BaseLib.getContext(), "支付失败:支付结果解析错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseLib.getInstance().getContext(), "支付失败:支付结果解析错误", Toast.LENGTH_SHORT).show();
                         break;
                     case Alipay.ERROR_NETWORK:
-                        Toast.makeText(BaseLib.getContext(), "支付失败:网络连接错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseLib.getInstance().getContext(), "支付失败:网络连接错误", Toast.LENGTH_SHORT).show();
                         break;
                     case Alipay.ERROR_PAY:
-                        Toast.makeText(BaseLib.getContext(), "支付错误:支付码支付失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseLib.getInstance().getContext(), "支付错误:支付码支付失败", Toast.LENGTH_SHORT).show();
                         break;
                     default:
-                        Toast.makeText(BaseLib.getContext(), "支付错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseLib.getInstance().getContext(), "支付错误", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }

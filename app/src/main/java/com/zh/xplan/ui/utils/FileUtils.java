@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class FileUtils {
 
     public static String getSplashDir() {
-        String dir = BaseLib.getContext().getFilesDir() + "/splash/";
+        String dir = BaseLib.getInstance().getContext().getFilesDir() + "/splash/";
         return mkdirs(dir);
     }
 

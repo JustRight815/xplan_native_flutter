@@ -29,7 +29,7 @@ public class NetworkUtils {
 	 * @return
 	 */
 	public static boolean isWifi() {
-		ConnectivityManager connectivityManager = (ConnectivityManager) BaseLib.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager connectivityManager = (ConnectivityManager) BaseLib.getInstance().getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivityManager == null) {
 			return false;
 		}
@@ -143,7 +143,7 @@ public class NetworkUtils {
 	 */
 	public static boolean isWifiConnected(){
 		boolean wifiConnected = false;
-		ConnectivityManager connManager = (ConnectivityManager) BaseLib.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager connManager = (ConnectivityManager) BaseLib.getInstance().getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 		if (mWifi!=null&&mWifi.isConnected()) {
 			wifiConnected = true;

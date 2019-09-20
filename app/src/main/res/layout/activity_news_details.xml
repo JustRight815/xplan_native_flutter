@@ -1,8 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:background="@android:color/white">
 
     <RelativeLayout
@@ -80,13 +79,11 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-    <include
-        android:id="@+id/loading_view"
-        layout ="@layout/stateview_loading_view" />
-
     <androidx.core.widget.NestedScrollView
+        android:layout_below="@id/titlebar"
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,31 +101,29 @@
                 android:textSize="22sp"
                 />
             <View
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_weight="1"
                 />
             <LinearLayout
                 android:id="@+id/ll_webview_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical"
-                >
-            </LinearLayout>
-
-            <!--<com.tencent.smtt.sdk.WebView-->
-                <!--android:id="@+id/wv_content"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"/>-->
+                android:orientation="vertical"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:overScrollMode="never"
                 android:scrollbars="none" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+    <include
+        android:id="@+id/loading_view"
+        android:layout_below="@id/titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout ="@layout/stateview_loading_view" />
+</RelativeLayout>

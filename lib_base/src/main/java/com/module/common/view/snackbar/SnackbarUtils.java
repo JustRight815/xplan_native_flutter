@@ -5,13 +5,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
-import androidx.annotation.AnimRes;
-import androidx.annotation.ColorInt;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.legacy.widget.Space;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,6 +14,14 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.AnimRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.legacy.widget.Space;
 
 import com.module.common.BaseLib;
 import com.module.common.R;
@@ -77,7 +78,7 @@ public class SnackbarUtils {
                 .anim(R.anim.toast_enter_miui,R.anim.toast_exit)
                 .alpha(0.9F)
                 .gravityWidth(Gravity.CENTER)
-                .radius(PixelUtil.dp2px(4, BaseLib.getContext()))
+                .radius(PixelUtil.dp2px(4, BaseLib.getInstance().getContext()))
                 .show();
     }
 

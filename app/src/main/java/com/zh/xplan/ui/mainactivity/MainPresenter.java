@@ -3,11 +3,10 @@ package com.zh.xplan.ui.mainactivity;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.module.common.BaseLib;
 import com.module.common.log.LogUtil;
 import com.module.common.net.callback.IDownLoadCallback;
 import com.module.common.net.rx.NetManager;
-import com.module.common.utils.SpUtil;
+import com.module.common.utils.MMKVUtil;
 import com.zh.xplan.AppConstants;
 import com.zh.xplan.ui.base.BasePresenter;
 import com.zh.xplan.ui.indexactivity.model.AdModel;
@@ -119,7 +118,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                             }
                             final String url = adModel.getUrl();
                             LogUtil.e("zh","response != null url " + url);
-                            String lastImgUrl =  SpUtil.getFromLocal(BaseLib.getContext(),"Splash","splash_url","");
+//                            String lastImgUrl =  SpUtil.getFromLocal(BaseLib.getContext(),"Splash","splash_url","");
+                            String lastImgUrl = MMKVUtil.INSTANCE.getString("splash_url","");
                             if (url == null || TextUtils.isEmpty(url) || TextUtils.equals(lastImgUrl, url)) {
                                 return;
                             }
@@ -132,7 +132,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                                         @Override
                                         public void onFinish(File downloadFile) {
                                             LogUtil.e("zh","download onFinish , url) " );
-                                            SpUtil.saveToLocal(BaseLib.getContext(),"Splash","splash_url",url);
+//                                            SpUtil.saveToLocal(BaseLib.getContext(),"Splash","splash_url",url);
+                                            MMKVUtil.INSTANCE.save("splash_url",url);
                                         }
 
                                         @Override

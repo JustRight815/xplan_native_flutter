@@ -438,7 +438,7 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
             install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             install.action = Intent.ACTION_VIEW
             install.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive")
-            BaseLib.getContext().startActivity(install)
+            BaseLib.getInstance().getContext().startActivity(install)
         }
     }
 

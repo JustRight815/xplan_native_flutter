@@ -29,7 +29,7 @@ public final class RetrofitCreator {
     private static final class OKHttpHolder {
         private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
         //设置缓存路径
-        private static File httpCacheDirectory = new File(BaseLib.getContext().getCacheDir(), "okhttpCache");
+        private static File httpCacheDirectory = new File(BaseLib.getInstance().getContext().getCacheDir(), "okhttpCache");
 
         private static final OkHttpClient OK_HTTP_CLIENT = addInterceptor()
                 .writeTimeout(10, TimeUnit.SECONDS)

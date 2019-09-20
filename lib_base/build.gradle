@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -22,12 +24,12 @@ dependencies {
     /*网络相关*/
     api 'com.squareup.okhttp3:okhttp:3.14.2'
     api 'com.squareup.okhttp3:logging-interceptor:3.14.2'
-    api 'com.squareup.retrofit2:retrofit:2.6.0'
+    api 'com.squareup.retrofit2:retrofit:2.6.1'
     api 'com.squareup.retrofit2:converter-scalars:2.3.0'
     //rxjava
-    api "io.reactivex.rxjava2:rxjava:2.1.7"
-    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    api "io.reactivex.rxjava2:rxjava:2.2.8"
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     //Json解析
     api 'com.google.code.gson:gson:2.8.5'
     // 图片缓存框架
@@ -50,6 +52,14 @@ dependencies {
     //腾讯Bugly 异常上报
     api 'com.tencent.bugly:crashreport:latest.release'
     api 'com.tencent.bugly:nativecrashreport:latest.release'
+    //腾讯存储
+    api 'com.tencent:mmkv-static:1.0.23'
+    implementation "androidx.core:core-ktx:+"
+    //kotlin
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
 
 

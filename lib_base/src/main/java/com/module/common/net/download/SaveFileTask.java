@@ -229,7 +229,7 @@ public final class SaveFileTask extends AsyncTask<Object, Void, File> {
             install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             install.setAction(Intent.ACTION_VIEW);
             install.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-            BaseLib.getContext().startActivity(install);
+            BaseLib.getInstance().getContext().startActivity(install);
         }
     }
 }
