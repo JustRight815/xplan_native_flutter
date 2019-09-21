@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CameraSession {
-    public static XPlanApplication applicationContext = XPlanApplication.getInstance();
+    public static XPlanApplication applicationContext = XPlanApplication.instance;
     
     protected CameraInfo cameraInfo;
     private String currentFlashMode = Camera.Parameters.FLASH_MODE_OFF;

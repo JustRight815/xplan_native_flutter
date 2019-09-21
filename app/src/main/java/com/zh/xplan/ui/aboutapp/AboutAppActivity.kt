@@ -72,8 +72,8 @@ class AboutAppActivity : BaseActivity() {
     private fun getVersionName(): String {
         var versionName = ""
         try {
-            val pm = XPlanApplication.getInstance().packageManager
-            val packageInfo: PackageInfo? = pm.getPackageInfo(XPlanApplication.getInstance().packageName,
+            val pm = XPlanApplication.instance.packageManager
+            val packageInfo: PackageInfo? = pm.getPackageInfo(XPlanApplication.instance.packageName,
                     PackageManager.GET_CONFIGURATIONS)
             versionName = packageInfo?.versionName?:""
         } catch (e: Exception) {

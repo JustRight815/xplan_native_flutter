@@ -598,7 +598,7 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
             return
         }
         var b: FileOutputStream? = null
-        val fileName = XPlanApplication.getInstance().getExternalFilesDir(null)!!.absolutePath + "/head.jpg"// 图片名字
+        val fileName = XPlanApplication.instance.getExternalFilesDir(null)!!.absolutePath + "/head.jpg"// 图片名字
         try {
             b = FileOutputStream(fileName)
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b)// 把数据写入文件
@@ -715,7 +715,7 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
      */
     private fun doWXPay(pay_param: String) {
         val wx_appid = "wxXXXXXXX"     //替换为自己的appid
-        WXPay.init(XPlanApplication.getInstance(), wx_appid)      //要在支付前调用
+        WXPay.init(XPlanApplication.instance, wx_appid)      //要在支付前调用
         WXPay.getInstance().doPay(pay_param, object : WXPay.WXPayResultCallBack {
             override fun onSuccess() {
                 //				Toast.makeText(XPlanApplication.getInstance(), "支付成功", Toast.LENGTH_SHORT).show();
@@ -833,7 +833,7 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
         private val PHOTO_REQUEST_CUT = 3// 结果
         /* 头像名称 */
         private val PHOTO_FILE_NAME = "temp_photo.jpg"
-        private val HEAD_PATH = XPlanApplication.getInstance().getExternalFilesDir(null)!!.absolutePath + "/head.jpg"
+        private val HEAD_PATH = XPlanApplication.instance.getExternalFilesDir(null)!!.absolutePath + "/head.jpg"
 
         /**
          * 从url中，获得默认文件名

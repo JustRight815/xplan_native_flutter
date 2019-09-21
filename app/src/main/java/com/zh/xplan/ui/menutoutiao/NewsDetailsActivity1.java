@@ -131,7 +131,7 @@ public class NewsDetailsActivity1 extends BaseActivity implements View.OnClickLi
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setDomStorageEnabled(true);
 		webSettings.setUseWideViewPort(true);
-		String appCachePath = XPlanApplication.getInstance().getCacheDir().getAbsolutePath();
+		String appCachePath = XPlanApplication.instance.getCacheDir().getAbsolutePath();
 		webSettings.setAppCachePath(appCachePath);
 		webSettings.setAppCacheEnabled(true);
 		webSettings.setLoadWithOverviewMode(true);

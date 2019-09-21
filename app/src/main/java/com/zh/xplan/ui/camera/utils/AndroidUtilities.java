@@ -47,7 +47,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class AndroidUtilities {
-    public static XPlanApplication applicationContext = XPlanApplication.getInstance();
+    public static XPlanApplication applicationContext = XPlanApplication.instance;
     private static int prevOrientation = -10;
     public static float density = 1;
     public static Point displaySize = new Point();

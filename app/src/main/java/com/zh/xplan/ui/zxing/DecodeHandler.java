@@ -174,7 +174,7 @@ final class DecodeHandler extends Handler {
 		Image barcode = new Image(width, height, "Y800");
 		Rect rect = new Rect(CameraManager.get().getFramingRect());
 //		scan_barcode.setCrop(rect.top, rect.left , rect.bottom - 200, rect.right - 200); //左边和下边不准  不加的话则全屏识别
-		barcode.setCrop(rect.top, rect.left , rect.width() + PixelUtil.dp2px(50, XPlanApplication.getInstance()), rect.height());
+		barcode.setCrop(rect.top, rect.left , rect.width() + PixelUtil.dp2px(50, XPlanApplication.instance), rect.height());
 		barcode.setData(data);
 
 		int result = scanner.scanImage(barcode);

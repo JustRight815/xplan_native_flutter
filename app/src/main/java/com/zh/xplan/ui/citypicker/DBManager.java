@@ -52,7 +52,7 @@ public class DBManager {
 //        LogUtil.e("zh path",XPlanApplication.getInstance().getDatabasePath(DB_NAME).getAbsolutePath()  + File.separator);
 //        LogUtil.e("zh path1",XPlanApplication.getInstance().getDatabasePath(DB_NAME).getPath()  + File.separator);
         //  /data/user/0/com.zh.xplan/databases/china_cities/
-        DB_PATH = XPlanApplication.getInstance().getDatabasePath(DB_NAME).getPath() + File.separator ;
+        DB_PATH = XPlanApplication.instance.getDatabasePath(DB_NAME).getPath() + File.separator ;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

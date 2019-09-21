@@ -317,7 +317,7 @@ class MainActivity : BaseActivity(), View.OnClickListener, MainView {
 
     override fun onDestroy() {
         mainPresenter?.onDestory()
-        XPlanApplication.getInstance().destroyApp()
+        XPlanApplication.instance.destroyApp()
         super.onDestroy()
     }
 }

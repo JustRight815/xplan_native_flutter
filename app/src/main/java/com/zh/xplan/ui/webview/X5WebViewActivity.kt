@@ -108,7 +108,7 @@ class X5WebViewActivity : BaseActivity() {
         webSettings.useWideViewPort = true
         webSettings.loadWithOverviewMode = true
         //缓存
-        val appCachePath = XPlanApplication.getInstance().cacheDir
+        val appCachePath = XPlanApplication.instance.cacheDir
                 .absolutePath
         webSettings.setAppCachePath(appCachePath)
         webSettings.allowFileAccess = true

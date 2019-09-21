@@ -29,7 +29,7 @@ public class SkinChangeHelper {
 
 
     private SkinChangeHelper() {
-        mContext = XPlanApplication.getInstance();
+        mContext = XPlanApplication.instance;
         mIsDefaultMode = SkinConfigHelper.isDefaultSkin();
     }
 

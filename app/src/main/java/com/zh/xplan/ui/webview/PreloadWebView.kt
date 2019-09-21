@@ -63,7 +63,7 @@ class PreloadWebView private constructor() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun createWebView(): WebView {
-        val context = XPlanApplication.getInstance()
+        val context = XPlanApplication.instance
         val webView = WebView(MutableContextWrapper(context))
         //远程代码执行漏洞
         webView.removeJavascriptInterface("accessibility")
@@ -88,7 +88,7 @@ class PreloadWebView private constructor() {
         webSettings.loadsImagesAutomatically = true
         //缓存
         webSettings.setAppCacheEnabled(true)
-        val appCachePath = XPlanApplication.getInstance().cacheDir
+        val appCachePath = XPlanApplication.instance.cacheDir
                 .absolutePath
         webSettings.setAppCachePath(appCachePath)
         webSettings.allowFileAccess = true

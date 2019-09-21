@@ -32,7 +32,7 @@ class IndexActivity : BaseActivity() {
             return
         }
         swipeBackEnable = false
-        CustomDensityUtil.setCustomDensity(this, XPlanApplication.getInstance())
+        CustomDensityUtil.setCustomDensity(this, XPlanApplication.instance)
     }
 
     override fun onResume() {
