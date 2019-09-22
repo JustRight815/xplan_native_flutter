@@ -28,6 +28,7 @@ import com.zh.xplan.ui.view.pulltorefresh.PtrFrameLayout;
 import com.zh.xplan.ui.view.pulltorefresh.PtrHandler;
 import com.zh.xplan.ui.view.pulltorefresh.customheader.PullToRefreshLayout;
 
+import org.jetbrains.annotations.NotNull;
 import org.qcode.qskinloader.SkinManager;
 
 import java.util.ArrayList;
@@ -75,8 +76,8 @@ public class LocalVideoFragment extends BaseFragment implements
 	}
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 		if (mView == null) {
 			mView =  View.inflate(getActivity(),
 					R.layout.fragment_local_video, null);

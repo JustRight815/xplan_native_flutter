@@ -715,7 +715,7 @@ public class CustomCameraActivity extends BaseActivity implements View.OnClickLi
                             break;
                     }
                 } catch (Exception e) {
-                    Log.d(TAG, "run " + e);
+                    Log.d(getTAG(), "run " + e);
                 }
                 takingPhoto = true;
                 switchControlView(false);

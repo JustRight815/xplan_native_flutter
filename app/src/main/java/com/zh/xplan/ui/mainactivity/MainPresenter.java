@@ -73,8 +73,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                                         if(temperature != null){
                                             temperature = temperature.replace("℃","").replace("C","").replace(" ","");
                                         }
-                                        if(view != null){
-                                            view.showCityWeather(cityName,temperature);
+                                        if(getView() != null){
+                                            getView().showCityWeather(cityName,temperature);
                                         }
                                     }
                                 }

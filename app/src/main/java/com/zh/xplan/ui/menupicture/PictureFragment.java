@@ -33,6 +33,7 @@ import com.zh.xplan.ui.view.pulltorefresh.customheader.PullToRefreshLayout;
 import com.zh.xplan.ui.view.stateiew.StateView;
 import com.zh.xplan.ui.zxing.activity.CaptureActivity;
 
+import org.jetbrains.annotations.NotNull;
 import org.qcode.qskinloader.SkinManager;
 
 import java.io.Serializable;
@@ -60,8 +61,8 @@ public class PictureFragment extends BaseFragment implements OnClickListener,Pic
 	private PictureFragmentPresenter presenter;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 		mContentView = View.inflate(getActivity(),
 				R.layout.fragment_picture, null);
 		initTitle(getActivity(), mContentView);

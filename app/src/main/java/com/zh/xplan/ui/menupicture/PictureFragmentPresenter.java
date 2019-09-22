@@ -48,8 +48,8 @@ public class PictureFragmentPresenter extends BasePresenter<PictureFragmentView>
         imageUrlList.add(imageUrl4);
         imageUrlList.add(imageUrl5);
         imageUrlList.add(imageUrl6);
-        if(view != null){
-            view.updateBanner(imageUrlList);
+        if(getView() != null){
+            getView().updateBanner(imageUrlList);
         }
     }
 
@@ -127,8 +127,8 @@ public class PictureFragmentPresenter extends BasePresenter<PictureFragmentView>
                                 }
                             }
                         }
-                        if(view != null){
-                            view.updatePictureData(true,isPullDownRefresh,mDataList,pictureModeList);
+                        if(getView() != null){
+                            getView().updatePictureData(true,isPullDownRefresh,mDataList,pictureModeList);
                         }
                     }
 

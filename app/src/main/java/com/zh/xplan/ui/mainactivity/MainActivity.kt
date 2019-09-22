@@ -182,18 +182,6 @@ class MainActivity : BaseActivity(), View.OnClickListener, MainView {
         }
     }
 
-    fun closeDrawerDelay() {
-        if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.postDelayed({ drawerLayout!!.closeDrawer(GravityCompat.START) }, 320)
-        }
-    }
-
-    fun closeDrawer() {
-        if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
-    }
-
     fun openDrawer() {
         drawerLayout?.openDrawer(GravityCompat.START)
     }
@@ -245,7 +233,8 @@ class MainActivity : BaseActivity(), View.OnClickListener, MainView {
     /**
      * 切换显示不同的fragment
      */
-    private fun setFragment(fromFragment: Fragment?, toFragment: Fragment) {
+    private fun setFragment(fromFragment: Fragment?, toFragment: Fragment?) {
+        toFragment?:return
         mFragmentManager?.let {
             val transaction = it.beginTransaction()
             if (isFirst) {

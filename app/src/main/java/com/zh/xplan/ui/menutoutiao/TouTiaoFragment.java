@@ -16,6 +16,7 @@ import com.zh.xplan.R;
 import com.zh.xplan.ui.base.BaseFragment;
 import com.zh.xplan.ui.menutoutiao.model.Channel;
 
+import org.jetbrains.annotations.NotNull;
 import org.qcode.qskinloader.SkinManager;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class TouTiaoFragment extends BaseFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View mView = View.inflate(getActivity(),
                 R.layout.fragment_toutiao, null);

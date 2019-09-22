@@ -39,6 +39,7 @@ import com.zh.xplan.ui.view.pulltorefresh.PtrHandler;
 import com.zh.xplan.ui.view.pulltorefresh.customheader.PullToRefreshLayout;
 import com.zh.xplan.ui.webview.X5WebViewActivity;
 
+import org.jetbrains.annotations.NotNull;
 import org.qcode.qskinloader.SkinManager;
 
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class NewsListFragment extends BaseFragment implements BaseQuickAdapter.R
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         LogUtil.e("zh","onCreateView");
         if (mView == null) {

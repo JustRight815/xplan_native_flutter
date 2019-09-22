@@ -61,8 +61,8 @@ public class LocalVideoPresenter extends BasePresenter<LocalVideoView> {
                 .subscribeWith(new DisposableObserver<List<LocalVideoBean>>() {
                     @Override
                     public void onNext(List<LocalVideoBean> list) {
-                        if(view != null){
-                            view.updateLocalVideoData(list);
+                        if(getView() != null){
+                            getView().updateLocalVideoData(list);
                         }
                     }
 

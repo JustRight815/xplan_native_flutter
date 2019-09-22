@@ -84,8 +84,8 @@ public class SettingFragmentPresenter extends BasePresenter<SettingFragmentView>
                                         char symbol = 176;
                                         temperature += "" + String.valueOf(symbol);
                                     }
-                                    if(view != null){
-                                        view.updateCityWeather(resultBean,temperature,pm,getPmBg(Integer.parseInt(pm)),
+                                    if(getView() != null){
+                                        getView().updateCityWeather(resultBean,temperature,pm,getPmBg(Integer.parseInt(pm)),
                                                 airCondition,cityName,weather,getWeatherImage(weather));
                                     }
                                 }
@@ -205,8 +205,8 @@ public class SettingFragmentPresenter extends BasePresenter<SettingFragmentView>
                 .subscribeWith(new DisposableObserver<String>() {
                     @Override
                     public void onNext(String s) {
-                        if(view != null){
-                            view.updateCacheSize(s);
+                        if(getView() != null){
+                            getView().updateCacheSize(s);
                         }
                     }
 
