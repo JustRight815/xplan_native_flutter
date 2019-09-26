@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="35dp">
 
-        <me.weyye.library.colortrackview.ColorTrackTabLayout
+        <com.zh.xplan.ui.view.colortrackview.ColorTrackTabLayout
             android:id="@+id/tab_channel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

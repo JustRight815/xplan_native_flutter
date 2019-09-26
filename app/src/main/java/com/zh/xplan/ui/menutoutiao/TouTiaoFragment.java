@@ -1,28 +1,28 @@
 package com.zh.xplan.ui.menutoutiao;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.module.common.utils.PixelUtil;
 import com.zh.xplan.R;
 import com.zh.xplan.ui.base.BaseFragment;
 import com.zh.xplan.ui.menutoutiao.model.Channel;
+import com.zh.xplan.ui.view.colortrackview.ColorTrackTabLayout;
 
 import org.jetbrains.annotations.NotNull;
 import org.qcode.qskinloader.SkinManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.weyye.library.colortrackview.ColorTrackTabLayout;
 
 /**
  * 今日头条菜单项的基础fragment

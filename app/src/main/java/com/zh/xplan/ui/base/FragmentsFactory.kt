@@ -42,7 +42,7 @@ object FragmentsFactory {
         return fragment
     }
 
-    fun getFragment(position: Int): BaseFragment {
-        return mFragments.get(position, null)
+    fun getFragment(position: Int): BaseFragment? {
+        return mFragments.get(position)
     }
 }
