@@ -116,6 +116,7 @@
         android:theme="@style/AppTheme"
         android:largeHeap="true"
         android:screenOrientation="portrait"
+        android:usesCleartextTraffic="true"
         tools:replace="android:label,android:allowBackup"
         tools:ignore="GoogleAppIndexingWarning"
         tools:overrideLibrary="com.module.common,com.shuyu.gsyvideoplayer.armv5"

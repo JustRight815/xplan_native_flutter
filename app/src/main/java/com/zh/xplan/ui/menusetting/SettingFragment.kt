@@ -10,7 +10,6 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,6 +22,9 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.module.common.BaseLib
 import com.module.common.log.LogUtil
 import com.module.common.net.FileUtil
@@ -141,12 +143,11 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
         ll_ad_dialog.setOnClickListener(this)
         activity?.let {
             val bt = getHead(HEAD_PATH)
-            if (bt != null) {
-                val drawable = BitmapDrawable(bt)
-                iv_head_picture.setImageDrawable(drawable)
-            } else {
-                iv_head_picture.setImageDrawable(it.resources.getDrawable(R.drawable.head_default))
-            }
+            Glide.with(this).load(bt)
+                    .apply(RequestOptions.bitmapTransform(CircleCrop())
+                            .placeholder(R.drawable.head_default)
+                            .error(R.drawable.head_default))
+                    .into(iv_head_picture)
             try {
                 val pm = it.packageManager
                 val pi: PackageInfo
@@ -577,9 +578,11 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
                      */
                     setPicToView(bitmap!!)// 保存在SD卡中
                     iv_head_picture.setImageBitmap(bitmap)// 用ImageView显示出来
-                    //					if (bitmap != null && !bitmap.isRecycled()) {
-                    //						bitmap.recycle();
-                    //					}
+                    Glide.with(this).load(bitmap)
+                            .apply(RequestOptions.bitmapTransform(CircleCrop())
+                                    .placeholder(R.drawable.head_default)
+                                    .error(R.drawable.head_default))
+                            .into(iv_head_picture)
                 }
                 val delete = tempFile!!.delete()
                 println("delete = $delete")

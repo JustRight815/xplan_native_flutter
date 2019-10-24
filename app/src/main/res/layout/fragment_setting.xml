@@ -124,15 +124,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.module.common.view.roundimageview.RoundImageView
-                    xmlns:melove="http://schemas.android.com/apk/res-auto"
+                <ImageView
                     android:id="@+id/iv_head_picture"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/head_default"
-                    melove:shape_type="round" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_version_name"
