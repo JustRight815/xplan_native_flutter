@@ -1,4 +1,4 @@
-package com.zh.xplan.ui.utils;
+package com.zh.xplan.common.utils;
 
 import android.text.TextUtils;
 import com.module.common.BaseLib;

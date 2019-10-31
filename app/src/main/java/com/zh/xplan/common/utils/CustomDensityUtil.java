@@ -1,9 +1,9 @@
-package com.zh.xplan.ui.utils;
+package com.zh.xplan.common.utils;
 
 import android.app.Activity;
 import android.app.Application;
-import androidx.annotation.NonNull;
 import android.util.DisplayMetrics;
+import androidx.annotation.NonNull;
 
 /**
  * 今日头条适配方案

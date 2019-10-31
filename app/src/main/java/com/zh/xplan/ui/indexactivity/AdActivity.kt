@@ -10,7 +10,7 @@ import com.module.common.log.LogUtil
 import com.zh.xplan.R
 import com.zh.xplan.ui.base.BaseActivity
 import com.zh.xplan.ui.mainactivity.MainActivity
-import com.zh.xplan.ui.utils.FileUtils
+import com.zh.xplan.common.utils.FileUtils
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.io.File
 import java.util.*

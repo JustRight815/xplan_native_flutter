@@ -17,7 +17,7 @@ import com.zh.swipeback.SlideFinishManager
 import com.zh.xplan.ui.menupicture.utils.ScreenUtil
 import com.zh.xplan.ui.skin.Settings
 import com.zh.xplan.ui.skin.SkinChangeHelper
-import com.zh.xplan.ui.utils.PackageUtil
+import com.zh.xplan.common.utils.PackageUtil
 import com.zh.xplan.ui.webview.PreloadWebView
 import org.litepal.LitePal
 import kotlin.system.exitProcess

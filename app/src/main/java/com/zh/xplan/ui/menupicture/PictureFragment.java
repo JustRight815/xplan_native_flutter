@@ -26,7 +26,7 @@ import com.zh.xplan.ui.mainactivity.MainActivity;
 import com.zh.xplan.ui.menupicture.adapter.GridPictureAdapter;
 import com.zh.xplan.ui.menupicture.model.GridPictureModel;
 import com.zh.xplan.ui.menupicture.model.HomeIndex;
-import com.zh.xplan.ui.utils.TitleUtil;
+import com.zh.xplan.common.utils.TitleUtil;
 import com.zh.xplan.ui.view.pulltorefresh.PtrFrameLayout;
 import com.zh.xplan.ui.view.pulltorefresh.PtrHandler;
 import com.zh.xplan.ui.view.pulltorefresh.customheader.PullToRefreshLayout;

@@ -10,7 +10,7 @@ import com.module.common.utils.MMKVUtil;
 import com.zh.xplan.AppConstants;
 import com.zh.xplan.ui.base.BasePresenter;
 import com.zh.xplan.ui.indexactivity.model.AdModel;
-import com.zh.xplan.ui.utils.FileUtils;
+import com.zh.xplan.common.utils.FileUtils;
 import com.zh.xplan.ui.weather.model.WeatherBeseModel;
 
 import java.io.File;

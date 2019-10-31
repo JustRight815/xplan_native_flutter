@@ -7,8 +7,8 @@ import com.module.common.log.LogUtil
 import com.zh.xplan.XPlanApplication
 import com.zh.xplan.ui.base.BaseActivity
 import com.zh.xplan.ui.mainactivity.MainActivity
-import com.zh.xplan.ui.utils.CustomDensityUtil
-import com.zh.xplan.ui.utils.FileUtils
+import com.zh.xplan.common.utils.CustomDensityUtil
+import com.zh.xplan.common.utils.FileUtils
 import java.io.File
 
 /**

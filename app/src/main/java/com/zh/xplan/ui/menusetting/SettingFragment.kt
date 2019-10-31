@@ -22,12 +22,11 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import com.module.common.BaseLib
 import com.module.common.log.LogUtil
-import com.module.common.net.FileUtil
 import com.module.common.net.callback.IDownLoadCallback
 import com.module.common.net.rx.NetManager
 import com.module.common.pay.alipay.Alipay
@@ -36,6 +35,7 @@ import com.module.common.sharesdk.ShareSDKManager
 import com.module.common.view.snackbar.SnackbarUtils
 import com.zh.xplan.R
 import com.zh.xplan.XPlanApplication
+import com.zh.xplan.common.utils.InstallApkUtil
 import com.zh.xplan.ui.aboutapp.AboutAppActivity
 import com.zh.xplan.ui.base.BaseFragment
 import com.zh.xplan.ui.camera.RecordVideoSet
@@ -44,7 +44,7 @@ import com.zh.xplan.ui.flutter.MyFlutterActivity
 import com.zh.xplan.ui.iptoolsactivity.IpToolsActivity
 import com.zh.xplan.ui.logisticsdetail.LogisticsDetailActivity
 import com.zh.xplan.ui.robot.RobotKotlinActivity
-import com.zh.xplan.ui.utils.TitleUtil
+import com.zh.xplan.common.utils.TitleUtil
 import com.zh.xplan.ui.view.addialog.AdDialog
 import com.zh.xplan.ui.weather.model.WeatherBeseModel
 import com.zh.xplan.ui.webview.NativeWebViewActivity
@@ -320,7 +320,6 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
                     .setMessage("1.测试下载 \n2.测试下载带进度 \n3.测试下载带进度")
                     .setNegativeButton("取消", null)
                     .setPositiveButton("确定") { arg0, arg1 ->
-                        //					getApk();
                         getApkWithPermissionCheck()
                     }
                     .create()
@@ -381,15 +380,17 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
                 LogUtil.e("zh", "onFinish , " + downloadFile.path)
                 title.text = "下载成功"
                 progressBar.progress = 100
-                tv_Progress.text = 100.toString() + "%"
-                autoInstallApk(downloadFile)
+                tv_Progress.text = "" + 100 + "%"
                 dialog.dismiss()
+                activity?.let {
+                    InstallApkUtil.autoInstallApk(it,downloadFile)
+                }
             }
 
             override fun onProgress(currentBytes: Long, totalBytes: Long) {
-                LogUtil.e("zh", "doDownload onProgress:$currentBytes/$totalBytes")
+//                LogUtil.e("zh", "doDownload onProgress:$currentBytes/$totalBytes")
                 var currentProgress = (currentBytes.toFloat() / totalBytes * 100).toInt()
-                LogUtil.e("zh", "doDownload currentProgress:$currentProgress")
+//                LogUtil.e("zh", "doDownload currentProgress:$currentProgress")
                 if (currentProgress > 100) {
                     currentProgress = 100
                 }
@@ -427,20 +428,6 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
         //				.dir(Environment.getExternalStorageDirectory().getPath() + "/xplan/")
         //				.name(getDefaultDownLoadFileName(url))
         //				.enqueue(callback);
-    }
-
-
-    private fun autoInstallApk(file: File?) {
-        if (file == null) {
-            return
-        }
-        if (FileUtil.getExtension(file.path) == "apk") {
-            val install = Intent()
-            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            install.action = Intent.ACTION_VIEW
-            install.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive")
-            BaseLib.getInstance().getContext().startActivity(install)
-        }
     }
 
     @OnNeverAskAgain(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -498,11 +485,15 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
     @NeedsPermission(Manifest.permission.CAMERA)
     fun camera() {
         val intent = Intent("android.media.action.IMAGE_CAPTURE")
-        // 判断存储卡是否可以用，可用进行存储
-        if (hasSdcard()) {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                    Uri.fromFile(File(Environment
-                            .getExternalStorageDirectory(), PHOTO_FILE_NAME)))
+        intent.addCategory("android.intent.category.DEFAULT")
+        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), PHOTO_FILE_NAME)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            activity?.let {
+                LogUtil.e("zh","url " + FileProvider.getUriForFile(it, "${XPlanApplication.instance.packageName}.fileProvider", file))
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,FileProvider.getUriForFile(it, "${XPlanApplication.instance.packageName}.fileProvider", file))
+            }
+        }else{
+            intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(file))
         }
         startActivityForResult(intent, PHOTO_REQUEST_CAMERA)
     }
@@ -553,38 +544,41 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), PHOTO_FILE_NAME)
         if (requestCode == PHOTO_REQUEST_GALLERY) {
             if (data != null) {
                 // 得到图片的全路径
                 val uri = data.data
-                crop(uri)
+                crop(uri,file)
             }
         } else if (requestCode == PHOTO_REQUEST_CAMERA) {
             if (resultCode == Activity.RESULT_OK) {
-                if (hasSdcard()) {
-                    tempFile = File(Environment.getExternalStorageDirectory(),
-                            PHOTO_FILE_NAME)
-                    crop(Uri.fromFile(tempFile))
-                } else {
-                    SnackbarUtils.ShortToast(mContentView, "未找到存储卡，无法存储照片！")
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    activity?.let {
+                        crop(FileProvider.getUriForFile(it, "${XPlanApplication.instance.packageName}.fileProvider", file),file)
+                    }
+                }else{
+                    crop(Uri.fromFile(file),file)
                 }
             }
         } else if (requestCode == PHOTO_REQUEST_CUT) {
             try {
-                bitmap = data!!.getParcelableExtra("data")
-                if (bitmap != null) {
+                activity?.let {
+                    bitmap = BitmapFactory.decodeStream(it.contentResolver.openInputStream(Uri.fromFile(file)))
+                }
+                bitmap?.let {
                     /**
                      * 上传服务器代码
                      */
-                    setPicToView(bitmap!!)// 保存在SD卡中
-                    iv_head_picture.setImageBitmap(bitmap)// 用ImageView显示出来
-                    Glide.with(this).load(bitmap)
+                    setPicToView(it)// 保存在SD卡中
+                    iv_head_picture.setImageBitmap(it)// 用ImageView显示出来
+                    Glide.with(this).load(it)
                             .apply(RequestOptions.bitmapTransform(CircleCrop())
                                     .placeholder(R.drawable.head_default)
                                     .error(R.drawable.head_default))
                             .into(iv_head_picture)
                 }
-                val delete = tempFile!!.delete()
+                val delete = tempFile?.delete()
                 println("delete = $delete")
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -643,11 +637,14 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
      * @date:2013-12-30
      * @param uri
      */
-    private fun crop(uri: Uri?) {
+    private fun crop(uri: Uri?,outFile: File?) {
         // 裁剪图片意图
         val intent = Intent("com.android.camera.action.CROP")
         intent.setDataAndType(uri, "image/*")
         intent.putExtra("crop", "true")
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
         // 裁剪框的比例，1：1
         intent.putExtra("aspectX", 1)
         intent.putExtra("aspectY", 1)
@@ -657,7 +654,8 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
         // 图片格式
         intent.putExtra("outputFormat", "JPEG")
         intent.putExtra("noFaceDetection", true)// 取消人脸识别
-        intent.putExtra("return-data", true)// true:不返回uri，false：返回uri
+        intent.putExtra("return-data", false)// true:不返回uri，false：返回uri
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outFile))
         startActivityForResult(intent, PHOTO_REQUEST_CUT)
     }
 

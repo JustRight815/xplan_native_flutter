@@ -1,4 +1,4 @@
-package com.zh.xplan.ui.utils
+package com.zh.xplan.common.utils
 
 import android.content.Context
 import android.os.Process
