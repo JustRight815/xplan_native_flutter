@@ -1,8 +1,15 @@
 package com.zh.xplan.ui.menutoutiao.model;
 
+import android.text.TextUtils;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.google.gson.Gson;
-
+import com.zh.xplan.ui.menutoutiao.ListUtils;
 import java.util.List;
+
+import static com.zh.xplan.ui.menutoutiao.NewsAdapter.CENTER_SINGLE_PIC_NEWS;
+import static com.zh.xplan.ui.menutoutiao.NewsAdapter.RIGHT_PIC_VIDEO_NEWS;
+import static com.zh.xplan.ui.menutoutiao.NewsAdapter.TEXT_NEWS;
+import static com.zh.xplan.ui.menutoutiao.NewsAdapter.THREE_PICS_NEWS;
 
 /**
  * @author ChayChan
@@ -10,7 +17,7 @@ import java.util.List;
  * @date 2017/7/6  15:11
  */
 
-public class News {
+public class News implements MultiItemEntity {
 
 
     /**
@@ -105,5 +112,43 @@ public class News {
     @Override
     public String toString() {
         return new Gson().toJson(this);
+    }
+
+    @Override
+    public int getItemType() {
+        if (has_video) {
+            //如果有视频
+            if (video_style ==0) {
+                //右侧视频
+                if (middle_image == null || TextUtils.isEmpty(middle_image.url)){
+                    return TEXT_NEWS;
+                }
+                return RIGHT_PIC_VIDEO_NEWS;
+            } else if (video_style == 2) {
+                //居中视频
+                return CENTER_SINGLE_PIC_NEWS;
+            }
+        } else {
+            //非视频新闻
+            if (!has_image) {
+                //纯文字新闻
+                return TEXT_NEWS;
+            } else {
+                if (ListUtils.isEmpty(image_list)) {
+                    //图片列表为空，则是右侧图片
+                    return RIGHT_PIC_VIDEO_NEWS;
+                }
+
+                if (gallary_image_count == 3) {
+                    //图片数为3，则为三图
+                    return THREE_PICS_NEWS;
+                }
+
+                //中间大图，右下角显示图数
+                return CENTER_SINGLE_PIC_NEWS;
+            }
+        }
+
+        return TEXT_NEWS;
     }
 }

@@ -39,7 +39,7 @@ dependencies {
     //事件总线
     api 'org.greenrobot:eventbus:3.0.0'
     //BRVAH是一个强大的RecyclerAdapter框架
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
     // StatusBarUtil 沉浸式状态栏
     api ("com.jaeger.statusbarutil:library:1.4.0") {
         exclude group: 'com.android.support', module: 'appcompat-v7'

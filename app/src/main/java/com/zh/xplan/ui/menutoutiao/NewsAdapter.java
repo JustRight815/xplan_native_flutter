@@ -11,9 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.google.gson.Gson;
 import com.module.common.image.ImageLoader;
 import com.module.common.log.LogUtil;
@@ -36,29 +35,29 @@ import io.reactivex.observers.DisposableObserver;
  * @description: TODO
  * @date 2017/7/6  17:10
  */
-public class NewsAdapter extends BaseQuickAdapter<News, BaseViewHolder> {
+public class NewsAdapter extends BaseMultiItemQuickAdapter<News, BaseViewHolder> {
 
     /**
      * 纯文字布局(文章、广告)
      */
-    private static final int TEXT_NEWS = 100;
+    public static final int TEXT_NEWS = 100;
     /**
      * 居中大图布局(1.单图文章；2.单图广告；3.视频，中间显示播放图标，右侧显示时长)
      */
-    private static final int CENTER_SINGLE_PIC_NEWS = 200;
+    public static final int CENTER_SINGLE_PIC_NEWS = 200;
     /**
      * 右侧小图布局(1.小图新闻；2.视频类型，右下角显示视频时长)
      */
-    private static final int RIGHT_PIC_VIDEO_NEWS = 300;
+    public static final int RIGHT_PIC_VIDEO_NEWS = 300;
     /**
      * 三张图片布局(文章、广告)
      */
-    private static final int THREE_PICS_NEWS = 400;
+    public static final int THREE_PICS_NEWS = 400;
 
     /**
      * 视频列表类型
      */
-    private static final int VIDEO_LIST_NEWS = 500;
+    public static final int VIDEO_LIST_NEWS = 500;
 
 
     private Context mContext;
@@ -79,58 +78,11 @@ public class NewsAdapter extends BaseQuickAdapter<News, BaseViewHolder> {
         mContext = context;
         mChannelCode = channelCode;
         this.isVideoList = isVideoList;
-
-        //Step.1
-        setMultiTypeDelegate(new MultiTypeDelegate<News>() {
-            @Override
-            protected int getItemType(News news) {
-                if (isVideoList) {
-                    return VIDEO_LIST_NEWS;
-                }
-
-                if (news.has_video) {
-                    //如果有视频
-                    if (news.video_style ==0) {
-                        //右侧视频
-                        if (news.middle_image == null || TextUtils.isEmpty(news.middle_image.url)){
-                            return TEXT_NEWS;
-                        }
-                        return RIGHT_PIC_VIDEO_NEWS;
-                    } else if (news.video_style == 2) {
-                        //居中视频
-                        return CENTER_SINGLE_PIC_NEWS;
-                    }
-                } else {
-                    //非视频新闻
-                    if (!news.has_image) {
-                        //纯文字新闻
-                        return TEXT_NEWS;
-                    } else {
-                        if (ListUtils.isEmpty(news.image_list)) {
-                            //图片列表为空，则是右侧图片
-                            return RIGHT_PIC_VIDEO_NEWS;
-                        }
-
-                        if (news.gallary_image_count == 3) {
-                            //图片数为3，则为三图
-                            return THREE_PICS_NEWS;
-                        }
-
-                        //中间大图，右下角显示图数
-                        return CENTER_SINGLE_PIC_NEWS;
-                    }
-                }
-
-                return TEXT_NEWS;
-            }
-        });
-        //Step .2
-        getMultiTypeDelegate()
-                .registerItemType(TEXT_NEWS, R.layout.toutiao_item_text_news)//纯文字布局
-                .registerItemType(CENTER_SINGLE_PIC_NEWS, R.layout.toutiao_item_center_pic_news)//居中大图布局
-                .registerItemType(RIGHT_PIC_VIDEO_NEWS, R.layout.toutiao_item_pic_video_news)//右侧小图布局
-                .registerItemType(THREE_PICS_NEWS, R.layout.toutiao_item_three_pics_news)//三张图片布局
-                .registerItemType(VIDEO_LIST_NEWS, R.layout.toutiao_item_video_list);//居中视频
+        addItemType(TEXT_NEWS, R.layout.toutiao_item_text_news);//纯文字布局
+        addItemType(CENTER_SINGLE_PIC_NEWS, R.layout.toutiao_item_center_pic_news);//居中大图布局
+        addItemType(RIGHT_PIC_VIDEO_NEWS, R.layout.toutiao_item_pic_video_news);//右侧小图布局
+        addItemType(THREE_PICS_NEWS, R.layout.toutiao_item_three_pics_news);//三张图片布局
+        addItemType(VIDEO_LIST_NEWS, R.layout.toutiao_item_video_list);//居中视频
     }
 
     @Override
@@ -151,7 +103,11 @@ public class NewsAdapter extends BaseQuickAdapter<News, BaseViewHolder> {
 
         int width = PixelUtil.dp2px(100,mContext);
         //根据类型为不同布局的条目设置数据
-        switch (helper.getItemViewType()) {
+        int itemType = helper.getItemViewType();
+        if (isVideoList) {
+            itemType =  VIDEO_LIST_NEWS;
+        }
+        switch (itemType) {
             case CENTER_SINGLE_PIC_NEWS:
                 //中间大图布局，判断是否有视频
                 TextView tvBottomRight = helper.getView(R.id.tv_bottom_right);
