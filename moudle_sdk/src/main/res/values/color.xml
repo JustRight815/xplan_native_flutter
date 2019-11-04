@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDark">#12b7f5</color>
+    <color name="colorPrimaryTrue">#12b7f5</color><!-- titlebar 颜色-->
+    <color name="colorPrimary">#FFFFFF</color><!-- listview viewpager 半月形颜色-->
+    <color name="colorAccent">#12b7f5</color>
+</resources>

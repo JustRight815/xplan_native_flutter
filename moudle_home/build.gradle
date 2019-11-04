@@ -1,0 +1,80 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    defaultConfig {
+//        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+    }
+
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        debug {
+            //混淆
+            minifyEnabled false
+            shrinkResources false //前提是minifyEnabled为true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+            }
+        }
+
+        release {
+            //混淆
+            minifyEnabled true
+            shrinkResources false //前提是minifyEnabled为true  设置为true 有风险
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+            }
+        }
+    }
+
+
+}
+
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1315_43612.jar')
+    implementation project(':moudle_sdk')
+    implementation project(':lib_swipeback')
+    implementation project(':flutter')
+    //HTML解析
+    implementation 'org.jsoup:jsoup:1.11.3'
+    // 图片浏览器 放大缩小图片
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
+    // 基于ijkplayer的视频播放器
+    //    compile 'com.shuyu:GSYVideoPlayer:2.0.8'
+    implementation 'com.shuyu:gsyVideoPlayer-java:7.0.2'
+    implementation 'com.shuyu:gsyVideoPlayer-armv7a:7.0.2'
+    // 动态权限处理 放到common里会报错
+    implementation 'org.permissionsdispatcher:permissionsdispatcher:4.5.0'
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
+    // tab
+    implementation 'org.litepal.android:core:1.5.0'
+    //Facebook Spring动画库
+    implementation 'com.facebook.rebound:rebound:0.3.8'
+    //Arouter处理器每个moudledou都需要
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
+}
+

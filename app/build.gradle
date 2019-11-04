@@ -21,6 +21,12 @@ android {
 
         multiDexEnabled true  //transformDexArchiveWithExternalLibsDexMergerForDebug unable to merge dex 问题
         resConfigs "zh" //app瘦身 只支持中文，不支持国际化
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     signingConfigs {
@@ -101,27 +107,9 @@ configurations.all {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1315_43612.jar')
-    implementation project(':lib_base')
-    implementation project(':lib_swipeback')
-    implementation project(':flutter')
-
-    implementation 'androidx.multidex:multidex:2.0.1'
-    //HTML解析
-    implementation 'org.jsoup:jsoup:1.11.3'
-    // 图片浏览器 放大缩小图片
-    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
-    // 基于ijkplayer的视频播放器
-    //    compile 'com.shuyu:GSYVideoPlayer:2.0.8'
-    implementation 'com.shuyu:gsyVideoPlayer-java:7.0.2'
-    implementation 'com.shuyu:gsyVideoPlayer-armv7a:7.0.2'
-    // 动态权限处理 放到common里会报错
-    implementation 'org.permissionsdispatcher:permissionsdispatcher:4.5.0'
-    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
-    // tab
-    implementation 'org.litepal.android:core:1.5.0'
-    //Facebook Spring动画库
-    implementation 'com.facebook.rebound:rebound:0.3.8'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
+    implementation project(':moudle_sdk')
+    implementation project(':moudle_home')
 }
 
 andResGuard {

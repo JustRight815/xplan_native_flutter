@@ -265,7 +265,6 @@
 -keep class com.zh.xplan.ui.menupicture.model.** { *; }
 -keep class com.zh.xplan.ui.menuvideo.kaiyanonlinevideo.bean.** { *; }
 -keep class com.zh.xplan.ui.robot.model.** { *; }
--keep class com.zh.xplan.XPlanApplication{*;}
 
 #-------------------------------glide--------------------------------
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -285,11 +284,3 @@ public *;
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
 
-#arouter
--keep public class com.alibaba.android.arouter.routes.**{*;}
--keep public class com.alibaba.android.arouter.facade.**{*;}
--keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
-# 如果使用了 byType 的方式获取 Service，需添加下面规则，保护接口
--keep interface * implements com.alibaba.android.arouter.facade.template.IProvider
-# 如果使用了 单类注入，即不定义接口实现 IProvider，需添加下面规则，保护实现
--keep class * implements com.alibaba.android.arouter.facade.template.IProvider

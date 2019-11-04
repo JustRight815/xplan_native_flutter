@@ -1,4 +1,4 @@
-include ':app', ':lib_swipeback'
+include ':app', ':moudle_sdk', ':moudle_home', ':lib_swipeback'
 include ':lib_base'
 include ':lib_skin'
 setBinding(new Binding([gradle: this]))
