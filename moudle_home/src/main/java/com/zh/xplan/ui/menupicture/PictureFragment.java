@@ -18,15 +18,18 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.module.common.log.LogUtil;
 import com.module.common.utils.PixelUtil;
+import com.module.common.utils.ScreenUtil;
+import com.module.common.view.popwindowmenu.MenuItem;
+import com.module.common.view.popwindowmenu.PopWindowMenu;
 import com.module.common.view.snackbar.SnackbarUtils;
 import com.zh.xplan.R;
+import com.zh.xplan.common.utils.TitleUtil;
 import com.zh.xplan.ui.base.BaseFragment;
 import com.zh.xplan.ui.imagedetailactivity.ImageDetailActivity;
 import com.zh.xplan.ui.mainactivity.MainActivity;
 import com.zh.xplan.ui.menupicture.adapter.GridPictureAdapter;
 import com.zh.xplan.ui.menupicture.model.GridPictureModel;
 import com.zh.xplan.ui.menupicture.model.HomeIndex;
-import com.zh.xplan.common.utils.TitleUtil;
 import com.zh.xplan.ui.view.pulltorefresh.PtrFrameLayout;
 import com.zh.xplan.ui.view.pulltorefresh.PtrHandler;
 import com.zh.xplan.ui.view.pulltorefresh.customheader.PullToRefreshLayout;
@@ -59,6 +62,8 @@ public class PictureFragment extends BaseFragment implements OnClickListener,Pic
 	private StateView mStateView;//加载状态控件
 	private View mStateViewRetry;//错误状态布局的根布局
 	private PictureFragmentPresenter presenter;
+	private PopWindowMenu mPopWindowMenu;
+	private View mMenuView;
 
 	@Override
 	public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -97,6 +102,7 @@ public class PictureFragment extends BaseFragment implements OnClickListener,Pic
 	 * @param rootView
 	 */
 	private void initView(View rootView) {
+		mMenuView = rootView.findViewById(R.id.title_right_imageview);
 		mPtrFrame = (PullToRefreshLayout) rootView.findViewById(R.id.rotate_header_list_view_frame);
 		mPtrFrame.setPtrHandler(new PtrHandler() {
 			@Override
@@ -242,10 +248,45 @@ public class PictureFragment extends BaseFragment implements OnClickListener,Pic
 		if(id == R.id.title_left_imageview){
 			((MainActivity)getActivity()).openDrawer();
 		}else if(id == R.id.title_right_imageview){
-			startActivity(new Intent(getActivity(), CaptureActivity.class));
+			showPopWindowMenu();
 		}else if(id == R.id.btn_top){
 			mRecyclerView.scrollToPosition(0);//快速返回顶部
 //				mRecyclerView.smoothScrollToPosition(0);//滚动回到顶部
+		}
+	}
+
+
+	private void showPopWindowMenu() {
+		Activity activity = getActivity();
+		if (activity != null && !activity.isFinishing()) {
+			mPopWindowMenu = new PopWindowMenu(activity);
+			final List<MenuItem> menuItems = new ArrayList<>();
+			menuItems.add(new MenuItem(R.drawable.qrcode_scan_icon, "扫一扫"));
+			menuItems.add(new MenuItem(R.drawable.qrcode_scan_icon, "点着玩"));
+			menuItems.add(new MenuItem(R.drawable.qrcode_scan_icon, "点着玩吧"));
+			menuItems.add(new MenuItem(R.drawable.qrcode_scan_icon, "点着玩"));
+			mPopWindowMenu
+					.dimBackground(true)
+					.addMenuList(menuItems)
+					.setOnMenuItemClickListener(new PopWindowMenu.OnMenuItemClickListener() {
+						@Override
+						public void onMenuItemClick(int position) {
+							if (position == 0) {
+								startActivity(new Intent(getActivity(), CaptureActivity.class));
+							} else {
+								SnackbarUtils.ShortToast(mContentView,menuItems.get(position).getText());
+							}
+						}
+					})
+					.showAsDropDown(mMenuView, mMenuView.getWidth() - ScreenUtil.dip2px(activity, 12), ScreenUtil.dip2px(activity, 12));
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		if(mPopWindowMenu != null){
+			mPopWindowMenu.dismiss();
 		}
 	}
 

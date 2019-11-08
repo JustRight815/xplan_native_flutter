@@ -26,6 +26,7 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.module.common.dialog.BaseDialog
 import com.module.common.log.LogUtil
 import com.module.common.net.callback.IDownLoadCallback
 import com.module.common.net.rx.NetManager
@@ -36,6 +37,7 @@ import com.module.common.view.snackbar.SnackbarUtils
 import com.zh.xplan.R
 import com.zh.xplan.XPlanApplication
 import com.zh.xplan.common.utils.InstallApkUtil
+import com.zh.xplan.common.utils.TitleUtil
 import com.zh.xplan.ui.aboutapp.AboutAppActivity
 import com.zh.xplan.ui.base.BaseFragment
 import com.zh.xplan.ui.camera.RecordVideoSet
@@ -44,7 +46,6 @@ import com.zh.xplan.ui.flutter.MyFlutterActivity
 import com.zh.xplan.ui.iptoolsactivity.IpToolsActivity
 import com.zh.xplan.ui.logisticsdetail.LogisticsDetailActivity
 import com.zh.xplan.ui.robot.RobotKotlinActivity
-import com.zh.xplan.common.utils.TitleUtil
 import com.zh.xplan.ui.view.addialog.AdDialog
 import com.zh.xplan.ui.weather.model.WeatherBeseModel
 import com.zh.xplan.ui.webview.NativeWebViewActivity
@@ -313,22 +314,17 @@ class SettingFragment : BaseFragment(), OnClickListener, SettingFragmentView {
      */
     private fun chackVersion() {
         activity?.let { activity ->
-            //		Beta.checkUpgrade();//检查版本号
-            //要用 android.support.v7.app.AlertDialog 并且设置主题
-            val dialog = AlertDialog.Builder(activity)
-                    .setTitle("发现新版本")
-                    .setMessage("1.测试下载 \n2.测试下载带进度 \n3.测试下载带进度")
+            BaseDialog
+                    .DefaultBuilder(activity)
+                    .setDefaultTitle("发现新版本")
+                    .setContextText("1.测试下载 \n2.测试下载带进度 \n3.测试下载带进度")
                     .setNegativeButton("取消", null)
-                    .setPositiveButton("确定") { arg0, arg1 ->
+                    .setPositiveButton("确定") {
+                        it?.dismiss()
                         getApkWithPermissionCheck()
                     }
-                    .create()
-            dialog.show()
-            dialog.window?.let { window ->
-                val params = window.attributes
-                params.width = activity.windowManager.defaultDisplay.width * 5 / 6
-                window.attributes = params
-            }
+                    .builder()
+                    .show()
         }
     }
 
