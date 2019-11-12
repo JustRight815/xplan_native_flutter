@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
+    skin:enable="true"
     android:layout_height="wrap_content">
+
     <TextView
         android:layout_marginLeft="10dp"
         android:layout_gravity="center_vertical"
@@ -23,9 +26,8 @@
         android:gravity="center_vertical"
         android:singleLine="true"
         android:ellipsize="end"
-        android:textColor="@color/black_font"
+        skin:enable="true"
+        android:textColor="@color/text_color_black"
         android:textSize="14sp"
         />
-
-
 </LinearLayout>

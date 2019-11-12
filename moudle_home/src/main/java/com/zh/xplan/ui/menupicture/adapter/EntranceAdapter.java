@@ -2,7 +2,6 @@ package com.zh.xplan.ui.menupicture.adapter;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zh.xplan.R;
 import com.zh.xplan.ui.menupicture.model.HomeIndex;
 import com.zh.xplan.ui.menupicture.utils.ScreenUtil;
+
+import org.qcode.qskinloader.SkinManager;
 
 import java.util.List;
 
@@ -58,6 +61,7 @@ public class EntranceAdapter extends RecyclerView.Adapter<EntranceAdapter.Entran
         /**
          * 在给View绑定显示的数据时，计算正确的position = position + mIndex * mPageSize，
          */
+        SkinManager.with(holder.itemView).applySkin(true);
         final int pos = position + mIndex * mPageSize;
         holder.entranceNameTextView.setText(homeEntrances.get(pos).itemTitle);
 //        holder.entranceIconImageView.setImageResource(homeEntrances.get(pos).imageUrl);

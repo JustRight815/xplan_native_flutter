@@ -127,6 +127,7 @@ public class GridPictureAdapter extends BaseMultiItemQuickAdapter<HomeIndex.Item
 
 
     private void bindIconListData(final BaseViewHolder helper, final HomeIndex.ItemInfoListBean item) {
+        SkinManager.with(helper.itemView).applySkin(true);
         ViewPager entranceViewPager = helper.getView(R.id.main_home_entrance_vp);
         final IndicatorView entranceIndicatorView = helper.getView(R.id.main_home_entrance_indicator);
         //首页菜单分页
@@ -169,7 +170,9 @@ public class GridPictureAdapter extends BaseMultiItemQuickAdapter<HomeIndex.Item
 
 
     private void bindJDBulletinData(BaseViewHolder helper, final HomeIndex.ItemInfoListBean item) {
+        SkinManager.with(helper.itemView).applySkin(true);
         UpDownViewSwitcher viewSwitcher = helper.getView(R.id.home_view_switcher);
+        SkinManager.with(viewSwitcher).applySkin(true);
         viewSwitcher.setSwitcheNextViewListener(new UpDownViewSwitcher.SwitchNextViewListener() {
             @Override
             public void switchTONextView(View nextView, int index) {
@@ -178,7 +181,9 @@ public class GridPictureAdapter extends BaseMultiItemQuickAdapter<HomeIndex.Item
                 }
                 final String tag = item.itemContentList.get(index % item.itemContentList.size()).itemTitle;
                 final String tag1 = item.itemContentList.get(index % item.itemContentList.size()).itemSubTitle;
-                ((TextView) nextView.findViewById(R.id.textview)).setText(tag1);
+                TextView textview =   ((TextView) nextView.findViewById(R.id.textview));
+                SkinManager.with(textview).applySkin(true);
+                textview.setText(tag1);
                 ((TextView) nextView.findViewById(R.id.switch_title_text)).setText(tag);
                 nextView.setOnClickListener(new View.OnClickListener() {
                     @Override
