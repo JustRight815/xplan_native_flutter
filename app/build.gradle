@@ -55,6 +55,9 @@ android {
             //混淆
             minifyEnabled false
             shrinkResources false //前提是minifyEnabled为true
+            zipAlignEnabled false
+            jniDebuggable true
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk {
                 abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
@@ -66,6 +69,9 @@ android {
             //混淆
             minifyEnabled true
             shrinkResources false //前提是minifyEnabled为true  设置为true 有风险
+            zipAlignEnabled true
+            jniDebuggable false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk {
                 abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
@@ -119,9 +125,36 @@ andResGuard {
     useSign = true
     // 打开这个开关，会keep住所有资源的原始路径，只混淆资源的名字
     keepRoot = false
+    // 设置这个值，会把arsc name列混淆成相同的名字，减少string常量池的大小
+    fixedResName = "arg"
+    // 打开这个开关会合并所有哈希值相同的资源，但请不要过度依赖这个功能去除去冗余资源
+    mergeDuplicatedRes = false
     whiteList = [
             // for your icon
             "R.drawable.icon",
+            "R.drawable.ic_*",
+
+            "R.color.text_color_black_night",
+            "R.color.bg_color_white_night",
+            "R.color.bg_img_transparent_night",
+            "R.color.lightgray_night",
+            "R.color.menu_select_text_color_night",
+            "R.color.menu_unSelect_text_color_night",
+            "R.color.bottom_menu_line_night",
+            "R.color.colorPrimaryDark_night",
+            "R.color.colorPrimaryTrue_night",
+
+            "R.color.text_color_black",
+            "R.color.bg_color_white",
+            "R.color.bg_img_transparent",
+            "R.color.lightgray",
+            "R.color.menu_select_text_color",
+            "R.color.menu_unSelect_text_color",
+            "R.color.bottom_menu_line",
+            "R.color.colorPrimaryDark",
+            "R.color.colorPrimaryTrue",
+
+
             // for fabric
             "R.string.com.crashlytics.*",
             // for google-services
@@ -140,7 +173,7 @@ andResGuard {
             "*.gif",
     ]
     sevenzip {
-        artifact = 'com.tencent.mm:SevenZip:1.2.12'
+        artifact = 'com.tencent.mm:SevenZip:1.2.17'
         //path = "/usr/local/bin/7za"
     }
 

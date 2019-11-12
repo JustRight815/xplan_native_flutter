@@ -45,6 +45,11 @@
 # 抛出异常时保留代码行号
 -keepattributes SourceFile,LineNumberTable
 
+#变态的字典  字典混淆
+-obfuscationdictionary dic.txt
+-classobfuscationdictionary dic.txt
+-packageobfuscationdictionary dic.txt
+
 # 保持哪些类不被混淆 因为这些子类有可能被外部调用
 -keep public class * extends android.app.Fragment
 -keep public class * extends android.app.Activity

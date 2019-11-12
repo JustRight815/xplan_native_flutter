@@ -17,7 +17,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.0'
         // 微信资源混淆
-        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.12'
+        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.17'
         // kotlin使用
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
