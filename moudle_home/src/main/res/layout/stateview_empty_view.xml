@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    skin:enable="true"
+    android:background="@color/bg_color_white"
     android:layout_gravity="center"
     android:orientation="vertical" >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        skin:enable="true"
+        android:textColor="@color/text_color_black"
         android:text="没有数据" />
 
 </LinearLayout>

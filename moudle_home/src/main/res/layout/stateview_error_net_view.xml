@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    skin:enable="true"
+    android:background="@color/bg_color_white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -16,6 +19,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        skin:enable="true"
+        android:textColor="@color/text_color_black"
         android:text="网络不给力，轻触屏幕重新加载" />
 
 </LinearLayout>

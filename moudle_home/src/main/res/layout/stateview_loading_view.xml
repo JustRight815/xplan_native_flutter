@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    skin:enable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/white"
+    android:background="@color/bg_color_white"
     android:orientation="horizontal" >
 
     <ProgressBar
@@ -16,6 +18,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        skin:enable="true"
+        android:textColor="@color/text_color_black"
         android:layout_gravity="center"
         android:layout_marginLeft="5dp"
         android:text="正在加载中..." />
