@@ -11,6 +11,8 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zh.xplan.R;
 import com.zh.xplan.ui.base.BaseActivity;
 import com.zh.xplan.ui.menuvideo.localvideo.model.LocalVideoBean;
+import com.zh.xplan.ui.playeractivity.listener.SampleListener;
+
 /**
  * 单独的视频播放页面
  */
@@ -46,8 +48,8 @@ public class PlayerLocalActivity extends BaseActivity {
         videoPlayer.setUp("file:///" + mLocalVideoBean.getPath(), false, mLocalVideoBean.getTitle());
 
         //增加封面
-        videoPlayer.loadCoverImage("file:///" + mLocalVideoBean.getPath(),0);
-
+//        videoPlayer.loadCoverImage("file:///" + mLocalVideoBean.getPath(),0);
+        videoPlayer.setBgResource(R.color.black);
         //增加title
         videoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
         videoPlayer.getTitleTextView().setTextSize(16);
@@ -64,11 +66,12 @@ public class PlayerLocalActivity extends BaseActivity {
         videoPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resolveFullBtn(videoPlayer);
+                orientationUtils.resolveByClick();
             }
         });
         //是否可以滑动调整
         videoPlayer.setIsTouchWiget(true);
+        videoPlayer.setAutoFullWithSize(true);
         //设置返回按键功能
         videoPlayer.getBackButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,8 +79,29 @@ public class PlayerLocalActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+        videoPlayer.setVideoAllCallBack(new SampleListener() {
+            @Override
+            public void onPrepared(String url, Object... objects) {
+                super.onPrepared(url, objects);
+            }
+
+            @Override
+            public void onAutoComplete(String url, Object... objects) {
+                super.onAutoComplete(url, objects);
+                finish();
+            }
+
+            @Override
+            public void onClickStartError(String url, Object... objects) {
+                super.onClickStartError(url, objects);
+            }
+
+            @Override
+            public void onQuitFullscreen(String url, Object... objects) {
+                super.onQuitFullscreen(url, objects);
+            }
+        });
         videoPlayer.startPlayLogic();
-        resolveFullBtn(videoPlayer);
     }
 
     /**
@@ -106,8 +130,10 @@ public class PlayerLocalActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (orientationUtils != null)
+        if (orientationUtils != null){
             orientationUtils.releaseListener();
+        }
+        GSYVideoManager.releaseAllVideos();
     }
 
     @Override

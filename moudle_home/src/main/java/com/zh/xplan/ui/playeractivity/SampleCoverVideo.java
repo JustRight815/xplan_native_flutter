@@ -280,4 +280,8 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
     public void setLoadVideoUrlListener(LoadVideoUrlListener loadVideoUrlListener){
         mLoadVideoUrlListener = loadVideoUrlListener;
     }
+
+    public void setBgResource(int resId){
+        findViewById(R.id.thumb).setBackgroundResource(resId);
+    }
 }

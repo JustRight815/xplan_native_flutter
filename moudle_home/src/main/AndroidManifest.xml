@@ -149,7 +149,7 @@
             android:name="com.zh.xplan.ui.playeractivity.PlayerLocalActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:exported="false"
-             />
+            android:theme="@style/LocalVideoStyle" />
 
         <activity
             android:name="com.zh.xplan.ui.playeractivity.PlayerDetailActivity"

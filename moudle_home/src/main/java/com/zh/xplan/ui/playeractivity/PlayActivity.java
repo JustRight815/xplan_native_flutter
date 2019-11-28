@@ -108,6 +108,7 @@ public class PlayActivity extends AppCompatActivity {
         videoPlayer.getBackButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("zh","videoPlayer.getBackButton() ========= ");
                 finish();
             }
         });
