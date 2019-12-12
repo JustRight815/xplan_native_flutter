@@ -49,7 +49,10 @@ public class PopWindowMenu {
         mRecyclerView = (RecyclerView) content.findViewById(R.id.trm_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-
+        //使用此种方法解决了在布局中写view实现分割线时 在9.0上宽度是自适应的，但是在5.0上宽度默认全屏的问题
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
+//        dividerItemDecoration.setDrawable(mContext.getResources().getDrawable(R.drawable.shape_popubwinow_line));
+        mRecyclerView.addItemDecoration(new ViewItemDecoration(mContext,16, 1));
         menuItemList = new ArrayList<>();
         mAdapter = new PWMenuAdapter(mContext, this, menuItemList, showIcon);
     }

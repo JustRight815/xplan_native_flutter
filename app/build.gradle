@@ -13,12 +13,6 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
 
-        // 指定要ndk需要兼容的架构(这样其他依赖包里mips,x86,armeabi,arm-v8之类的so会被过滤掉)
-        //不指定的话zbar总是找不到so
-        ndk {
-            abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
-        }
-
         multiDexEnabled true  //transformDexArchiveWithExternalLibsDexMergerForDebug unable to merge dex 问题
         resConfigs "zh" //app瘦身 只支持中文，不支持国际化
 
@@ -60,7 +54,8 @@ android {
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk {
-                abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+                //支持X86模拟器 'armeabi' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+                abiFilters  "armeabi-v7a",'x86'//
             }
             signingConfig signingConfigs.debug
         }
@@ -74,7 +69,8 @@ android {
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk {
-                abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+                //不支持X86架构 'armeabi' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+                abiFilters  "armeabi-v7a"
             }
             signingConfig signingConfigs.release
         }

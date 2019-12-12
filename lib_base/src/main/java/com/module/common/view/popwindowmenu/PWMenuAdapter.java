@@ -64,11 +64,6 @@ public class PWMenuAdapter extends RecyclerView.Adapter<PWMenuAdapter.TRMViewHol
         }else {
             holder.container.setBackgroundDrawable(addStateDrawable(mContext, -1, R.drawable.trm_popup_middle_pressed));
         }
-        if(position == getItemCount() -1){
-            holder.menuLine.setVisibility(View.INVISIBLE);
-        }else{
-            holder.menuLine.setVisibility(View.VISIBLE);
-        }
         final int pos = holder.getAdapterPosition();
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,14 +94,12 @@ public class PWMenuAdapter extends RecyclerView.Adapter<PWMenuAdapter.TRMViewHol
         ViewGroup container;
         ImageView icon;
         TextView text;
-        View menuLine;
 
         TRMViewHolder(View itemView) {
             super(itemView);
             container = (ViewGroup) itemView;
             icon = (ImageView) itemView.findViewById(R.id.trm_menu_item_icon);
             text = (TextView) itemView.findViewById(R.id.trm_menu_item_text);
-            menuLine = itemView.findViewById(R.id.trm_menu_line);
         }
     }
 

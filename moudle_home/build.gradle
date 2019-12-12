@@ -28,23 +28,11 @@ android {
 
     buildTypes {
         debug {
-            //混淆
-            minifyEnabled false
-            shrinkResources false //前提是minifyEnabled为true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            ndk {
-                abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
-            }
         }
 
         release {
-            //混淆
-            minifyEnabled true
-            shrinkResources false //前提是minifyEnabled为true  设置为true 有风险
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            ndk {
-                abiFilters  "armeabi-v7a"// ,'armeabi-v7a' , 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
-            }
         }
     }
 
@@ -67,6 +55,7 @@ dependencies {
     //    compile 'com.shuyu:GSYVideoPlayer:2.0.8'
     implementation 'com.shuyu:gsyVideoPlayer-java:7.0.2'
     implementation 'com.shuyu:gsyVideoPlayer-armv7a:7.0.2'
+    debugImplementation 'com.shuyu:gsyVideoPlayer-x86:7.0.2'
     // 动态权限处理 放到common里会报错
     implementation 'org.permissionsdispatcher:permissionsdispatcher:4.5.0'
     kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
